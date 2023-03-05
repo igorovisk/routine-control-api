@@ -1,0 +1,28 @@
+{
+   "name": "routine-control",
+   "version": "1.0.0",
+   "description": "A API created to manage routine tasks.",
+   "main": "app.js",
+   "scripts": {
+      "dev": "nodemon src/server.ts",
+      "test": "nodemon src/server.ts "
+   },
+   "author": "igor augusto corso borgio",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/express": "^4.17.17",
+      "@types/node": "^18.13.0",
+      "nodemon": "^2.0.20",
+      "prisma": "^4.10.1",
+      "ts-node-dev": "^2.0.0",
+      "typescript": "^4.9.5"
+   },
+   "dependencies": {
+      "@prisma/client": "^4.10.0",
+      "body-parser": "^1.20.1",
+      "cookie-parser": "^1.4.6",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "multer": "^1.4.5-lts.1"
+   }
+}
