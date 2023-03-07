@@ -41,6 +41,7 @@ export class TaskLogic {
          };
 
          const response = await this.repository.createTask(newTask);
+         return response;
       } catch (error) {
          console.log("error on task logic...");
          throw error;
@@ -59,6 +60,7 @@ export class TaskLogic {
          };
 
          const response = await this.repository.updateTask(updatedTask);
+         return response;
       } catch (error) {
          console.log("error on task logic...");
          throw error;

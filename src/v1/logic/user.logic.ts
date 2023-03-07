@@ -59,5 +59,25 @@ export class UserLogic {
          throw error;
       }
    }
+   async updateUser(req: Request, res: Response): Promise<UserDTO> {
+      try {
+         const { email, username, password, birthDate, age, fullname } =
+            req.body;
+
+         const updatedUser = {
+            email: email,
+            username: username,
+            fullname: fullname,
+            age: age,
+            birthDate: new Date(birthDate),
+            password: password,
+         };
+
+         const response = this.repository.updateUser(updatedUser);
+         return response;
+      } catch (error) {
+         throw error;
+      }
+   }
    //    async getUserById() {}
 }

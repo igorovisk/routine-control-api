@@ -12,6 +12,12 @@ router
 
 router
    .route("/users$")
+   .put((req: Request, res: Response, next: NextFunction) => {
+      controller.updateUser(req, res, next);
+   });
+
+router
+   .route("/users$")
    .post((req: Request, res: Response, next: NextFunction) => {
       controller.createUser(req, res, next);
    });

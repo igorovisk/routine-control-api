@@ -41,6 +41,32 @@ export class UserRepository {
          throw error;
       }
    }
+   async updateUser(updatedUserData: UserInterface): Promise<UserDTO> {
+      try {
+         //get token
+         const token = {
+            id: "1",
+         };
+         const userExists = await prisma.user.findUnique({
+            where: {
+               id: token.id,
+            },
+         });
+
+         if (!userExists) {
+            throw new Error("This user doesn't exist.");
+         }
+
+         const updatedUser = await prisma.user.update({
+            where: { id: token.id },
+            data: updatedUserData,
+         });
+         console.log(updatedUser, "updatedUser ");
+         return updatedUser;
+      } catch (error) {
+         throw error;
+      }
+   }
 
    async getUserByUsernameOrEmail(
       username?: string,

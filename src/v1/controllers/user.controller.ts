@@ -25,6 +25,14 @@ export class UserController {
          next(error);
       }
    }
+   async updateUser(req: Request, res: Response, next: NextFunction) {
+      try {
+         const response = this.logic.updateUser(req, res);
+         return res.status(200).send(response);
+      } catch (error) {
+         next(error);
+      }
+   }
    async getUserByUsernameOrEmail(
       req: Request,
       res: Response,
