@@ -37,7 +37,6 @@ export class RoutineLogic {
          const newRoutine = {
             name: name,
             description: description,
-            tasks: [],
             userId: userId,
          };
 
@@ -59,7 +58,6 @@ export class RoutineLogic {
             description: description,
             comment: comment,
             userId: userId,
-            tasks: [],
          };
 
          const response = await this.repository.updateRoutine(updatedRoutine);

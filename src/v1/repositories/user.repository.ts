@@ -6,7 +6,15 @@ const prisma = new PrismaClient();
 export class UserRepository {
    async getUsers(): Promise<UserDTO[]> {
       try {
-         const users = await prisma.user.findMany();
+         const users = await prisma.user.findMany({
+            include: {
+               Routine: {
+                  include: {
+                     tasks: true,
+                  },
+               },
+            },
+         });
          return users;
       } catch (error) {
          console.log(error, "Error getting all users from database.");
@@ -17,8 +25,13 @@ export class UserRepository {
    async getUserById(id: string): Promise<UserDTO | {}> {
       try {
          const user = await prisma.user.findUnique({
-            where: {
-               id: id,
+            where: { id: id },
+            include: {
+               Routine: {
+                  include: {
+                     tasks: true,
+                  },
+               },
             },
          });
          if (!user) {
@@ -81,6 +94,13 @@ export class UserRepository {
                   },
                   { username: username },
                ],
+            },
+            include: {
+               Routine: {
+                  include: {
+                     tasks: true,
+                  },
+               },
             },
          });
          return user;

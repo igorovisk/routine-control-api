@@ -30,14 +30,15 @@ export class RoutineRepository {
       }
    }
 
-   async  createRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
+   async createRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
       try {
-        const newRoutine = await prisma.routine.create({ data: routine });
-        return newRoutine;
+         console.log(routine, "routine");
+         const newRoutine = await prisma.routine.create({ data: routine });
+         return newRoutine;
       } catch (error) {
-        throw error;
+         throw error;
       }
-    }
+   }
 
    async updateRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
       try {

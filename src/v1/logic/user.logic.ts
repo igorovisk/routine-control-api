@@ -30,6 +30,16 @@ export class UserLogic {
       }
    }
 
+   async getUserById(req: Request, res: Response): Promise<UserDTO | {}> {
+      try {
+         const { id } = req.params;
+         const response = await this.repository.getUserById(id);
+         return response;
+      } catch (error) {
+         throw error;
+      }
+   }
+
    async createUser(req: Request, res: Response): Promise<UserDTO> {
       try {
          const { email, username, password, birthDate, age, fullname } =
@@ -42,6 +52,7 @@ export class UserLogic {
             age: age,
             birthDate: new Date(birthDate),
             password: password,
+            routineId: "123",
          };
 
          const userExists = await this.repository.getUserByUsernameOrEmail(
@@ -61,14 +72,12 @@ export class UserLogic {
    }
    async updateUser(req: Request, res: Response): Promise<UserDTO> {
       try {
-         const { email, username, password, birthDate, age, fullname } =
-            req.body;
+         const { email, username, password, birthDate, fullname } = req.body;
 
          const updatedUser = {
             email: email,
             username: username,
             fullname: fullname,
-            age: age,
             birthDate: new Date(birthDate),
             password: password,
          };

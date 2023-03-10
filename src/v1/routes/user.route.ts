@@ -10,6 +10,12 @@ router
       controller.getUsers(req, res, next);
    });
 
+   router
+   .route("/users/:id")
+   .get((req: Request, res: Response, next: NextFunction) => {
+      controller.getUserById(req, res, next);
+   });
+
 router
    .route("/users$")
    .put((req: Request, res: Response, next: NextFunction) => {

@@ -37,9 +37,9 @@ export class TaskLogic {
          const newTask = {
             description: description,
             comment: comment,
-            routineId: routineId
+            routineId: routineId,
          };
-
+         console.log(newTask, "newTask");
          const response = await this.repository.createTask(newTask);
          return response;
       } catch (error) {

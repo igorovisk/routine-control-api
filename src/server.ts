@@ -1,6 +1,6 @@
 import express, { Request, Response, json } from "express";
 import { Express } from "express";
-import { TaskRouter, UserRouter } from "./v1/routes";
+import { RoutineRouter, TaskRouter, UserRouter } from "./v1/routes";
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
@@ -12,6 +12,7 @@ app.get("/", function (req: Request, res: Response) {
 
 app.use(UserRouter);
 app.use(TaskRouter);
+app.use(RoutineRouter);
 
 export class Server {
    static async init(app: Express) {
