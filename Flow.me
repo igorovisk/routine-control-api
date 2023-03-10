@@ -1,0 +1,39 @@
+Usuário:
+
+- Id (chave primária)
+- Nome
+- Email
+- Senha
+- Rotinas (relacionamento um-para-muitos com a tabela de Rotinas)
+
+Rotina:
+
+- Id (chave primária)
+- Nome
+- UsuárioId (chave estrangeira para a tabela de Usuários)
+- Tarefas (relacionamento um-para-muitos com a tabela de Tarefas)
+
+Tarefa:
+
+- Id (chave primária)
+- Nome
+- Concluída (booleano)
+- RotinaId (chave estrangeira para a tabela de Rotinas)
+
+Fluxo:
+
+1. O usuário faz login no sistema.
+2. O sistema apresenta a tela de configurações do usuário.
+3. O usuário cria uma nova rotina diária.
+4. O sistema adiciona a rotina na tabela de Rotinas, relacionando-a com o usuário logado.
+5. O usuário adiciona tarefas à rotina.
+6. O sistema adiciona as tarefas à tabela de Tarefas, relacionando-as com a rotina criada.
+7. No dia seguinte, o usuário acessa a tela de rotina diária.
+8. O sistema apresenta todas as tarefas da rotina diária em forma de checkboxes.
+9. O usuário dá check nas tarefas que foram concluídas.
+10. O sistema atualiza o status das tarefas na tabela de Tarefas.
+11. O usuário salva a rotina diária do dia.
+12. O sistema adiciona a rotina diária na tabela de Rotinas, relacionando-a com a rotina original e marcando as tarefas como concluídas.
+13. O usuário pode repetir esse processo a cada dia para atualizar sua rotina diária com as tarefas concluídas.
+
+O sistema permitirá que o usuário crie rotinas diárias e adicione tarefas a elas, verifique e marque as tarefas concluídas a cada dia e salve a rotina diária atualizada no banco de dados.

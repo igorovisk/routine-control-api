@@ -30,10 +30,10 @@ export class TaskController {
 
    async createTask(req: Request, res: Response, next: NextFunction) {
       try {
-         const newTask = await this.logic.createTasks(req, res);
-         return newTask;
+         const newTask = await this.logic.createTask(req, res);
+         console.log(newTask);
+         return res.status(200).send(newTask);
       } catch (error) {
-         next(error);
          console.log(error, "<- Create Task Error...");
       }
    }

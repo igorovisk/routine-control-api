@@ -1,0 +1,32 @@
+Configurar banco de dados MySQL para armazenar informações de usuário, rotinas e tarefas
+Criar servidor Express para lidar com requisições HTTP do cliente
+Criar endpoint POST para login do usuário:
+Verificar se usuário existe no banco de dados
+Retornar token de autenticação
+Criar endpoint GET para tela de configurações do usuário:
+Verificar se token de autenticação é válido
+Retornar informações do usuário
+Criar endpoint POST para criar nova rotina diária:
+Verificar se token de autenticação é válido
+Criar nova rotina no banco de dados relacionada ao usuário logado
+Retornar objeto com informações da rotina criada
+Criar endpoint POST para adicionar tarefas a uma rotina:
+Verificar se token de autenticação é válido
+Criar novas tarefas no banco de dados relacionadas à rotina específica
+Retornar objeto com informações das tarefas criadas
+Criar endpoint GET para tela de rotina diária:
+Verificar se token de autenticação é válido
+Retornar informações das tarefas relacionadas à rotina do dia
+Criar endpoint PUT para atualizar status de uma tarefa:
+Verificar se token de autenticação é válido
+Atualizar status da tarefa no banco de dados
+Retornar objeto com informações da tarefa atualizada
+Criar endpoint POST para salvar rotina diária do dia:
+Verificar se token de autenticação é válido
+Criar nova rotina diária no banco de dados relacionada à rotina original
+Marcar tarefas como concluídas
+Criar endpoint GET para visualizar rotinas diárias anteriores:
+Verificar se token de autenticação é válido
+Retornar informações das rotinas diárias anteriores
+Testar a API para garantir que todas as funcionalidades estejam funcionando corretamente
+Documentar a API para que outros desenvolvedores possam entendê-la

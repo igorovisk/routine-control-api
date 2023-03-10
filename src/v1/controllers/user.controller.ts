@@ -10,7 +10,8 @@ export class UserController {
 
    async getUsers(req: Request, res: Response, next: NextFunction) {
       try {
-         const response = this.logic.getUsers(req, res);
+         const response = await this.logic.getUsers(req, res);
+         console.log(response, "all users");
          return res.status(200).send(response);
       } catch (error) {
          next(error);
@@ -19,7 +20,8 @@ export class UserController {
 
    async createUser(req: Request, res: Response, next: NextFunction) {
       try {
-         const response = this.logic.createUser(req, res);
+         const response = await this.logic.createUser(req, res);
+         console.log(response, "response user");
          return res.status(200).send(response);
       } catch (error) {
          next(error);
@@ -27,7 +29,7 @@ export class UserController {
    }
    async updateUser(req: Request, res: Response, next: NextFunction) {
       try {
-         const response = this.logic.updateUser(req, res);
+         const response = await this.logic.updateUser(req, res);
          return res.status(200).send(response);
       } catch (error) {
          next(error);
@@ -39,7 +41,7 @@ export class UserController {
       next: NextFunction
    ) {
       try {
-         const response = this.logic.createUser(req, res);
+         const response = await this.logic.createUser(req, res);
          return res.status(200).send(response);
       } catch (error) {
          next(error);

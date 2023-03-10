@@ -1,0 +1,7 @@
+A API criada com Node, Express e MySql permite aos usuários gerenciarem suas rotinas diárias e tarefas de maneira eficiente e organizada. Quando um usuário faz login no sistema, é apresentada a tela de configurações do usuário. A partir daí, o usuário pode criar uma nova rotina diária, que é adicionada na tabela de Rotinas, relacionando-a com o usuário logado.
+
+O usuário pode adicionar tarefas à rotina criada, que são adicionadas à tabela de Tarefas, relacionando-as com a rotina específica. No dia seguinte, quando o usuário acessa a tela de rotina diária, o sistema apresenta todas as tarefas da rotina diária em forma de checkboxes. O usuário pode então marcar as tarefas que foram concluídas e o sistema atualiza o status das tarefas na tabela de Tarefas.
+
+Após marcar as tarefas concluídas, o usuário pode salvar a rotina diária do dia. O sistema adiciona a rotina diária na tabela de Rotinas, relacionando-a com a rotina original e marcando as tarefas como concluídas. O usuário pode repetir esse processo a cada dia para atualizar sua rotina diária com as tarefas concluídas.
+
+A API inclui endpoints para lidar com as requisições HTTP do cliente, como endpoint POST para o login do usuário, endpoint GET para a tela de configurações do usuário, endpoint POST para criar uma nova rotina diária, endpoint POST para adicionar tarefas a uma rotina, endpoint GET para a tela de rotina diária, endpoint PUT para atualizar o status de uma tarefa, endpoint POST para salvar a rotina diária do dia e endpoint GET para visualizar as rotinas diárias anteriores.

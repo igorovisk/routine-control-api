@@ -30,7 +30,7 @@ export class TaskLogic {
       }
    }
 
-   async createTasks(req: Request, res: Response) {
+   async createTask(req: Request, res: Response) {
       try {
          const { description, comment, userId } = req.body;
 
