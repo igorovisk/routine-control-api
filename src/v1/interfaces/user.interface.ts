@@ -5,5 +5,4 @@ export interface UserInterface {
    age: number;
    birthDate: Date;
    password: string;
-//    tasks: Array<[]>;
 }

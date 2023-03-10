@@ -32,11 +32,12 @@ export class RoutineLogic {
 
    async createRoutine(req: Request, res: Response) {
       try {
-         const { description, comment, userId } = req.body;
+         const { name, description, userId } = req.body;
 
          const newRoutine = {
+            name: name,
             description: description,
-            comment: comment,
+            tasks: [],
             userId: userId,
          };
 
@@ -50,13 +51,15 @@ export class RoutineLogic {
 
    async updateRoutine(req: Request, res: Response) {
       try {
-         const { description, comment, userId, routineId } = req.body;
+         const { description, comment, userId, name, routineId } = req.body;
 
          const updatedRoutine = {
             id: routineId,
+            name: name,
             description: description,
             comment: comment,
             userId: userId,
+            tasks: [],
          };
 
          const response = await this.repository.updateRoutine(updatedRoutine);

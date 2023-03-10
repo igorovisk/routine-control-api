@@ -1,7 +1,10 @@
+import { Task } from "@prisma/client";
+
 export interface RoutineDTO {
    id: string;
-   description: string;
-   comment: string;
+   name: string;
+   description?: string | null;
+   tasks?: Task[];
    userId: string;
    createdAt: Date;
    updatedAt: Date;

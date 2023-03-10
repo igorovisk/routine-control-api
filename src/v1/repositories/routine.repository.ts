@@ -1,13 +1,13 @@
-import { RoutineDTO } from "../interfaces/dtos/Routine.dto";
 import { RoutineInterface } from "../interfaces";
 import { PrismaClient } from "@prisma/client";
+import { RoutineDTO } from "../interfaces/dtos";
 const prisma = new PrismaClient();
 
 export class RoutineRepository {
    async getAllRoutines(): Promise<RoutineDTO[]> {
       try {
-         const Routines = await prisma.routine.findMany();
-         return Routines;
+         const routines = await prisma.routine.findMany();
+         return routines;
       } catch (error) {
          console.log(error, "Error getting all RoutineS from database.");
          throw error;
@@ -16,34 +16,34 @@ export class RoutineRepository {
 
    async getRoutineById(id: string): Promise<RoutineDTO | {}> {
       try {
-         const response = await prisma.routine.findUnique({
+         const routine = await prisma.routine.findUnique({
             where: {
                id: id,
             },
          });
-         if (!response) {
+         if (!routine) {
             return {};
          }
-         return response;
+         return routine;
       } catch (error) {
          throw error;
       }
    }
 
-   async createRoutine(Routine: RoutineInterface): Promise<RoutineDTO> {
+   async  createRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
       try {
-         const newRoutine = await prisma.routine.create({ data: Routine });
-         return newRoutine;
+        const newRoutine = await prisma.routine.create({ data: routine });
+        return newRoutine;
       } catch (error) {
-         throw error;
+        throw error;
       }
-   }
+    }
 
-   async updateRoutine(Routine: RoutineInterface): Promise<RoutineDTO> {
+   async updateRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
       try {
          const updatedRoutine = await prisma.routine.update({
-            where: { id: Routine.id },
-            data: Routine,
+            where: { id: routine.id },
+            data: routine,
          });
          return updatedRoutine;
       } catch (error) {

@@ -7,4 +7,5 @@ export interface UserDTO {
    birthDate: Date;
    createdAt: Date;
    updatedAt: Date;
+   routineId: String;
 }

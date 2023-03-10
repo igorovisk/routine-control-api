@@ -8,28 +8,41 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String   @unique @db.VarChar(100)
-  fullname  String   @db.VarChar(100)
-  age       Int
+  id        String    @id @default(uuid())
+  email     String    @unique
+  username  String    @unique @db.VarChar(100)
+  fullname  String    @db.VarChar(100)
   birthDate DateTime
   password  String
-  tasks     Task[]
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
+  routine   Routine[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
 
   @@map("users")
 }
 
 model Task {
   id          String   @id @default(uuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  description String
+  routineId   String
+  routine     Routine  @relation(fields: [routineId], references: [id])
+  description String?
+  done        Boolean  @default(false)
   comment     String
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @map("updated_at")
 
   @@map("tasks")
+}
+
+model Routine {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  tasks       Task[]
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  @@map("routines")
 }
