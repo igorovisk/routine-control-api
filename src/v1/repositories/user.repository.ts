@@ -9,7 +9,10 @@ export class UserRepository {
          const users = await prisma.user.findMany({
             include: {
                Routine: {
-                  include: {
+                  select: {
+                     id: true,
+                     name: true,
+                     description: true,
                      tasks: true,
                   },
                },
@@ -28,7 +31,10 @@ export class UserRepository {
             where: { id: id },
             include: {
                Routine: {
-                  include: {
+                  select: {
+                     id: true,
+                     name: true,
+                     description: true,
                      tasks: true,
                   },
                },
@@ -81,23 +87,20 @@ export class UserRepository {
       }
    }
 
-   async getUserByUsernameOrEmail(
-      username?: string,
+   async getUserByEmail(
       email?: string
    ): Promise<UserDTO | null> {
       try {
-         const user = prisma.user.findFirst({
+         const user = await prisma.user.findFirst({
             where: {
-               OR: [
-                  {
                      email: email,
-                  },
-                  { username: username },
-               ],
             },
             include: {
                Routine: {
-                  include: {
+                  select: {
+                     id: true,
+                     name: true,
+                     description: true,
                      tasks: true,
                   },
                },

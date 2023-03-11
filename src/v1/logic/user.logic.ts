@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { UserDTO } from "../interfaces/dtos";
 import { UserRepository } from "../repositories";
-
+import { Crypto } from "../utils";
 export class UserLogic {
    private repository: UserRepository;
+   private crypto: Crypto;
 
    constructor() {
       this.repository = new UserRepository();
+      this.crypto = new Crypto();
    }
 
    async getUsers(req: Request, res: Response): Promise<UserDTO[]> {
@@ -18,12 +20,12 @@ export class UserLogic {
       }
    }
 
-   async getUserByUsernameOrEmail(
+   async getUserByEmail(
       req: Request,
       res: Response
    ): Promise<UserDTO | null> {
       try {
-         const response = await this.repository.getUserByUsernameOrEmail();
+         const response = await this.repository.getUserByEmail(req.body.email);
          return response;
       } catch (error) {
          throw error;
@@ -45,24 +47,21 @@ export class UserLogic {
          const { email, username, password, birthDate, age, fullname } =
             req.body;
 
-         const newUser = {
-            email: email,
-            username: username,
-            fullname: fullname,
-            age: age,
-            birthDate: new Date(birthDate),
-            password: password,
-            routineId: "123",
-         };
-
-         const userExists = await this.repository.getUserByUsernameOrEmail(
-            username,
+         const userExists = await this.repository.getUserByEmail(
             email
          );
-         console.log(userExists, "userExists");
          if (userExists) {
             throw new Error("This user already exists");
          } else {
+            const newUser = {
+               email: email,
+               username: username,
+               fullname: fullname,
+               age: age,
+               birthDate: new Date(birthDate),
+               password: await this.crypto.encryptString(password),
+            };
+
             const response = this.repository.createUser(newUser);
             return response;
          }

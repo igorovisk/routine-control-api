@@ -43,13 +43,13 @@ export class UserController {
          next(error);
       }
    }
-   async getUserByUsernameOrEmail(
+   async getUserByEmail(
       req: Request,
       res: Response,
       next: NextFunction
    ) {
       try {
-         const response = await this.logic.createUser(req, res);
+         const response = await this.logic.getUserByEmail(req, res);
          return res.status(200).send(response);
       } catch (error) {
          next(error);
