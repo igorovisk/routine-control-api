@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
 import { UserDTO } from "../interfaces/dtos";
 import { UserRepository } from "../repositories";
-import { Crypto } from "../utils";
+import { Crypto, JWTTokenUtils } from "../utils";
 export class UserLogic {
    private repository: UserRepository;
    private crypto: Crypto;
@@ -20,10 +21,7 @@ export class UserLogic {
       }
    }
 
-   async getUserByEmail(
-      req: Request,
-      res: Response
-   ): Promise<UserDTO | null> {
+   async getUserByEmail(req: Request, res: Response): Promise<UserDTO | null> {
       try {
          const response = await this.repository.getUserByEmail(req.body.email);
          return response;
@@ -47,9 +45,7 @@ export class UserLogic {
          const { email, username, password, birthDate, age, fullname } =
             req.body;
 
-         const userExists = await this.repository.getUserByEmail(
-            email
-         );
+         const userExists = await this.repository.getUserByEmail(email);
          if (userExists) {
             throw new Error("This user already exists");
          } else {
@@ -62,7 +58,7 @@ export class UserLogic {
                password: await this.crypto.encryptString(password),
             };
 
-            const response = this.repository.createUser(newUser);
+            const response = await this.repository.createUser(newUser);
             return response;
          }
       } catch (error) {
@@ -72,20 +68,25 @@ export class UserLogic {
    async updateUser(req: Request, res: Response): Promise<UserDTO> {
       try {
          const { email, username, password, birthDate, fullname } = req.body;
-
-         const updatedUser = {
-            email: email,
-            username: username,
-            fullname: fullname,
-            birthDate: new Date(birthDate),
-            password: password,
-         };
-
-         const response = this.repository.updateUser(updatedUser);
-         return response;
+         if (typeof req.headers["x-access-token"] !== "string") {
+            throw new Error("Token is not a string");
+         }
+         const token = JWTTokenUtils.decode(req.headers["x-access-token"]);
+         if (typeof token === "object" && token !== null) {
+            const updatedUser = {
+               id: token.user.id,
+               email: email,
+               username: username,
+               fullname: fullname,
+               birthDate: new Date(birthDate),
+               password: password,
+            };
+            const response = await this.repository.updateUser(updatedUser);
+            return response;
+         }
+         throw new Error("Error on decoded token");
       } catch (error) {
          throw error;
       }
    }
-   //    async getUserById() {}
 }

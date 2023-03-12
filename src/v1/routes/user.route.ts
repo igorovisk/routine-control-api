@@ -32,8 +32,6 @@ router
 router
    .route("/users$")
    .post((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
-      JWTTokenUtils.verify(token);
       controller.createUser(req, res, next);
    });
 

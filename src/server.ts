@@ -1,5 +1,4 @@
-import express, { Request, Response, json } from "express";
-import { Express } from "express";
+import express, { Express, Request, Response, json } from "express";
 import { RoutineRouter, TaskRouter, UserRouter, AuthRouter } from "./v1/routes";
 require("dotenv").config();
 const app = express();
@@ -10,10 +9,7 @@ app.get("/", function (req: Request, res: Response) {
    res.send("Server running...");
 });
 
-app.use(UserRouter);
-app.use(TaskRouter);
-app.use(RoutineRouter);
-app.use(AuthRouter);
+app.use(AuthRouter, UserRouter, TaskRouter, RoutineRouter);
 
 export class Server {
    static async init(app: Express) {

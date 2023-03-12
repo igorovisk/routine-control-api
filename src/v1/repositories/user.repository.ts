@@ -3,6 +3,15 @@ import { UserInterface } from "../interfaces";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+type UpdatedUserDate = {
+   id: string;
+   email: string;
+   username: string;
+   fullname: string;
+   birthDate: Date;
+   password: string;
+   routineId?: string;
+};
 export class UserRepository {
    async getUsers(): Promise<UserDTO[]> {
       try {
@@ -60,24 +69,21 @@ export class UserRepository {
          throw error;
       }
    }
-   async updateUser(updatedUserData: UserInterface): Promise<UserDTO> {
+   async updateUser(updatedUserData: UpdatedUserDate): Promise<UserDTO> {
       try {
          //get token
-         const token = {
-            id: "1",
-         };
-         const userExists = await prisma.user.findUnique({
-            where: {
-               id: token.id,
-            },
-         });
-
-         if (!userExists) {
-            throw new Error("This user doesn't exist.");
-         }
+         // const userExists = await prisma.user.findUnique({
+         //    where: {
+         //       id: updatedUserData.id,
+         //    },
+         // });
+         // console.log(userExists, 'userExists')
+         // if (!userExists) {
+         //    throw new Error("This user doesn't exist.");
+         // }
 
          const updatedUser = await prisma.user.update({
-            where: { id: token.id },
+            where: { id: updatedUserData.id },
             data: updatedUserData,
          });
          console.log(updatedUser, "updatedUser ");
@@ -87,13 +93,11 @@ export class UserRepository {
       }
    }
 
-   async getUserByEmail(
-      email?: string
-   ): Promise<UserDTO | null> {
+   async getUserByEmail(email?: string): Promise<UserDTO | null> {
       try {
          const user = await prisma.user.findFirst({
             where: {
-                     email: email,
+               email: email,
             },
             include: {
                Routine: {

@@ -41,11 +41,7 @@ export class UserController {
          next(error);
       }
    }
-   async getUserByEmail(
-      req: Request,
-      res: Response,
-      next: NextFunction
-   ) {
+   async getUserByEmail(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getUserByEmail(req, res);
          return res.status(200).send(response);
