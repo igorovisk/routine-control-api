@@ -11,7 +11,6 @@ export class RoutineController {
    async getAllRoutines(req: Request, res: Response, next: NextFunction) {
       try {
          const routines = await this.logic.getAllRoutines(req, res);
-         console.log(routines, "controller routines");
          return res.status(200).send(routines);
       } catch (error) {
          next(error);
@@ -31,7 +30,6 @@ export class RoutineController {
    async createRoutine(req: Request, res: Response, next: NextFunction) {
       try {
          const newRoutine = await this.logic.createRoutine(req, res);
-         console.log(newRoutine);
          return res.status(200).send(newRoutine);
       } catch (error) {
          console.log(error, "<- Create Routine Error...");

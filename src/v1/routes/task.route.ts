@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { TaskController } from "../controllers";
+import { JWTTokenUtils } from "../utils";
 
 const controller = new TaskController();
 const router = Router();
@@ -7,28 +8,32 @@ const router = Router();
 router
    .route("/tasks$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      console.log("Get All Tasks route called...");
+      const token = req.headers["x-access-token"] as string;
+      JWTTokenUtils.verify(token);
       controller.getAllTasks(req, res, next);
    });
 
 router
    .route("/tasks/:id")
    .get((req: Request, res: Response, next: NextFunction) => {
-      console.log("Get Task By Id route called...");
+      const token = req.headers["x-access-token"] as string;
+      JWTTokenUtils.verify(token);
       controller.getTaskById(req, res, next);
    });
 
 router
    .route("/tasks$")
    .post((req: Request, res: Response, next: NextFunction) => {
-      console.log("Post Task route called...");
+      const token = req.headers["x-access-token"] as string;
+      JWTTokenUtils.verify(token);
       controller.createTask(req, res, next);
    });
 
 router
    .route("/tasks$")
    .put((req: Request, res: Response, next: NextFunction) => {
-      console.log("Put Task route called...");
+      const token = req.headers["x-access-token"] as string;
+      JWTTokenUtils.verify(token);
       controller.createTask(req, res, next);
    });
 

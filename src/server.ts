@@ -13,7 +13,8 @@ app.get("/", function (req: Request, res: Response) {
 app.use(UserRouter);
 app.use(TaskRouter);
 app.use(RoutineRouter);
-app.use(AuthRouter)
+app.use(AuthRouter);
+
 export class Server {
    static async init(app: Express) {
       app.listen(port, () => console.info(`Server started on port ${port}`));

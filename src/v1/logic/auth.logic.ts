@@ -7,33 +7,37 @@ export class AuthLogic {
    private static jwt: JWTTokenUtils;
    private userRepository: UserRepository;
    private crypto: Crypto;
+
    constructor() {
       this.crypto = new Crypto();
       this.userRepository = new UserRepository();
    }
 
-   async login(email: string, password: string) {
+   async login(email: string, password: string): Promise<string> {
       try {
          const user = await this.userRepository.getUserByEmail(email);
          if (!user) {
             throw new Error("User not found..");
          }
-         console.log(user.password, " user.password");
-         console.log(password, "password");
 
          const comparedPasswords = await this.crypto.compare(
             password,
             user.password
          );
 
-         if(!comparedPasswords){
-            throw new Error('Wrong username or password')
+         if (!comparedPasswords) {
+            throw new Error("Wrong username or password");
          }
 
-         //TODO sign jwt and return token
+         const token = JWTTokenUtils.sign({
+            user: { ...user },
+            auth: true,
+         });
 
+         return token;
       } catch (error) {
          console.log(error, "<- Error on login logic..");
+         throw error;
       }
    }
 }

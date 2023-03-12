@@ -11,7 +11,6 @@ export class TaskController {
    async getAllTasks(req: Request, res: Response, next: NextFunction) {
       try {
          const tasks = await this.logic.getAllTasks(req, res);
-         console.log(tasks, "controller tasks");
          return res.status(200).send(tasks);
       } catch (error) {
          next(error);
@@ -31,7 +30,6 @@ export class TaskController {
    async createTask(req: Request, res: Response, next: NextFunction) {
       try {
          const newTask = await this.logic.createTask(req, res);
-         console.log(newTask);
          return res.status(200).send(newTask);
       } catch (error) {
          console.log(error, "<- Create Task Error...");
