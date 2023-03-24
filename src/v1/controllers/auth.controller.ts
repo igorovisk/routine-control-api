@@ -11,9 +11,7 @@ export class AuthController {
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;
-         console.log(email, password);
          const response = await this.logic.login(email, password);
-         console.log(response, "response");
          // Set cookie options
          const cookieOptions = {
             httpOnly: true,
