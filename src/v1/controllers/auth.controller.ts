@@ -11,8 +11,19 @@ export class AuthController {
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;
+         console.log(email, password);
          const response = await this.logic.login(email, password);
-         return res.status(200).json({ token: response });
+         console.log(response, "response");
+         // Set cookie options
+         const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+         };
+
+         // Set cookie with token
+         res.cookie("token", response, cookieOptions);
+
+         return res.status(200).send();
       } catch (error) {
          console.log(error);
       }

@@ -1,7 +1,16 @@
 import express, { Express, Request, Response, json } from "express";
 import { RoutineRouter, TaskRouter, UserRouter, AuthRouter } from "./v1/routes";
 require("dotenv").config();
+
 var cors = require("cors");
+const corsOrigin = {
+   origin: "http://localhost:3001", //or whatever port your frontend is using
+   credentials: true,
+   optionSuccessStatus: 200,
+};
+const app = express();
+app.use(cors(corsOrigin));
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,10 +31,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 
-const app = express();
 const port = process.env.PORT;
 app.use(json());
-app.use(cors());
+
 app.use(AuthRouter, UserRouter, TaskRouter, RoutineRouter);
 
 export class Server {
