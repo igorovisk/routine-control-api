@@ -6,6 +6,15 @@ const controller = new UserController();
 const router = Router();
 
 router
+   .route("/me$")
+   .get((req: Request, res: Response, next: NextFunction) => {
+      const token = req.headers["x-access-token"] as string;
+      JWTTokenUtils.verify(token);
+      controller.getMe(req, res, next);
+   });
+
+
+router
    .route("/users$")
    .get((req: Request, res: Response, next: NextFunction) => {
       const token = req.headers["x-access-token"] as string;

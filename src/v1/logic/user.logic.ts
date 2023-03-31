@@ -12,6 +12,23 @@ export class UserLogic {
       this.crypto = new Crypto();
    }
 
+   async getMe(req: Request, res: Response): Promise<UserDTO[] | {}> {
+      try {
+         if (typeof req.headers.cookie !== "string") {
+            throw new Error("Token is not a string");
+         }
+         const formattedToken = req.headers.cookie?.split("token=")[1];
+         const token = JWTTokenUtils.decode(formattedToken);
+         if (token === null || typeof token !== "object") {
+            throw new Error("Invalid token on request");
+         }
+         const response = await this.repository.getMe(token.user.id);
+         return response;
+      } catch (error) {
+         throw error;
+      }
+   }
+
    async getUsers(req: Request, res: Response): Promise<UserDTO[]> {
       try {
          const response = await this.repository.getUsers();

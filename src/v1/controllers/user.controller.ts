@@ -8,6 +8,15 @@ export class UserController {
       this.logic = new UserLogic();
    }
 
+   async getMe(req: Request, res: Response, next: NextFunction) {
+      try {
+         const response = await this.logic.getMe(req, res);
+         return res.status(200).send(response);
+      } catch (error) {
+         next(error);
+      }
+   }
+
    async getUsers(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getUsers(req, res);
