@@ -59,19 +59,24 @@ export class UserLogic {
 
    async createUser(req: Request, res: Response): Promise<UserDTO> {
       try {
-         const { email, username, password, birthDate, age, fullname } =
-            req.body;
+         const { email, username, password, birthdate, fullname } = req.body;
 
          const userExists = await this.repository.getUserByEmail(email);
          if (userExists) {
             throw new Error("This user already exists");
          } else {
+            //Calculate user age
+            const today = new Date();
+            const convertedBirthDate = new Date(birthdate);
+            const diffInMs = today.getTime() - convertedBirthDate.getTime();
+            const age = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365.25));
+            //
+
             const newUser = {
                email: email,
                username: username,
                fullname: fullname,
-               age: age,
-               birthDate: new Date(birthDate),
+               birthDate: convertedBirthDate,
                password: await this.crypto.encryptString(password),
             };
 

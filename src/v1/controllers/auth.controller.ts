@@ -24,6 +24,8 @@ export class AuthController {
          return res.status(200).send();
       } catch (error) {
          console.log(error);
+         res.status(401).json({ Error: "Wrong email or password." }).send();
+         next(error);
       }
    }
 }
