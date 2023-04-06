@@ -17,7 +17,6 @@ export class AuthController {
             httpOnly: true,
             secure: true,
          };
-
          // Set cookie with token
          res.cookie("token", response, cookieOptions);
 
@@ -25,6 +24,17 @@ export class AuthController {
       } catch (error) {
          console.log(error);
          res.status(401).json({ Error: "Wrong email or password." }).send();
+         next(error);
+      }
+   }
+
+   async logout(req: Request, res: Response, next: NextFunction) {
+      try {
+         const response = await this.logic.logout(req, res);
+         return res.status(200).json("Sucessfully logged off").send();
+      } catch (error) {
+         console.log(error);
+         res.status(401).json({ Error: "Error while logging out." }).send();
          next(error);
       }
    }

@@ -11,6 +11,12 @@ router
     controller.login(req, res, next);
   });
 
+  router
+  .route('/logout$')
+  .post((req: Request, res: Response, next: NextFunction) => {
+    controller.logout(req, res, next);
+  });
+
 export { router as AuthRouter };
 
 

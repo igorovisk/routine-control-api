@@ -40,4 +40,9 @@ export class AuthLogic {
          throw error;
       }
    }
+
+   async logout(req: Request, res: Response): Promise<Response> {
+      res.cookie("token", "", { expires: new Date(0) });
+      return res;
+   }
 }
