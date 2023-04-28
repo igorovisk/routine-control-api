@@ -78,16 +78,10 @@ export class UserLogic {
             const convertedBirthDate = new Date(birthdate);
             const diffInMs = today.getTime() - convertedBirthDate.getTime();
             //
-            console.log("passou do getUserEmail");
             //profileImage check
             let profileImageBuffer: Buffer | null = null;
             if (profileImage) {
                const validatedProfileImage = validateProfileImage(profileImage);
-
-               console.log(
-                  profileImage,
-                  "profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- "
-               );
                const profileImageContents = await fs.promises.readFile(
                   profileImage.path
                );
