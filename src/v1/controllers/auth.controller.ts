@@ -22,9 +22,8 @@ export class AuthController {
 
          return res.status(200).send();
       } catch (error) {
-         console.log(error);
-         res.status(401).json({ Error: "Wrong email or password." }).send();
-         next(error);
+         console.log(error, "ERROR ON LOGIN");
+         res.status(401).json({ Error: "Wrong email or password." });
       }
    }
 
@@ -34,7 +33,7 @@ export class AuthController {
          return res.status(200).json("Sucessfully logged off").send();
       } catch (error) {
          console.log(error);
-         res.status(401).json({ Error: "Error while logging out." }).send();
+         res.status(401).json({ Error: "Error while logging out." });
          next(error);
       }
    }

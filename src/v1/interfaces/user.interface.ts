@@ -5,4 +5,5 @@ export interface UserInterface {
    birthDate: Date;
    password: string;
    routineId?: string;
+   profileImage?: Buffer | null | undefined;
 }

@@ -30,6 +30,7 @@ export class UserRepository {
                },
             },
          });
+         console.log(me, 'mE')
          if (!me) {
             return {};
          }
@@ -40,6 +41,7 @@ export class UserRepository {
             birthDate: me.birthDate,
             routineId: me.routineId,
             Routine: me.Routine,
+            profileImage: me.profileImage
          };
       } catch (error) {
          console.log(error, "Error getting all users from database.");
@@ -57,6 +59,7 @@ export class UserRepository {
                      name: true,
                      description: true,
                      tasks: true,
+                     
                   },
                },
             },

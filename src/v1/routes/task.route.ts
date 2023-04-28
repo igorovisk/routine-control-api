@@ -8,7 +8,7 @@ const router = Router();
 router
    .route("/tasks$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getAllTasks(req, res, next);
    });
@@ -16,7 +16,7 @@ router
 router
    .route("/tasks/:id")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getTaskById(req, res, next);
    });
@@ -24,7 +24,7 @@ router
 router
    .route("/tasks$")
    .post((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.createTask(req, res, next);
    });
@@ -32,7 +32,7 @@ router
 router
    .route("/tasks$")
    .put((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.createTask(req, res, next);
    });

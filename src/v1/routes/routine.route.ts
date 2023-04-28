@@ -8,7 +8,7 @@ const router = Router();
 router
    .route("/routines$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getAllRoutines(req, res, next);
    });
@@ -16,7 +16,7 @@ router
 router
    .route("/routines/:id")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getRoutineById(req, res, next);
    });
@@ -24,7 +24,7 @@ router
 router
    .route("/routines$")
    .post((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.createRoutine(req, res, next);
    });
@@ -32,7 +32,7 @@ router
 router
    .route("/routines$")
    .put((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.createRoutine(req, res, next);
    });

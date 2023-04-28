@@ -10,4 +10,5 @@ export interface UserDTO {
    updatedAt: Date;
    routineId?: string | null;
    routine?: RoutineDTO[] | null;
+   profileImage?: Buffer | null
 }

@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
+import * as fs from "fs";
 import { UserDTO } from "../interfaces/dtos";
 import { UserRepository } from "../repositories";
 import { Crypto, JWTTokenUtils } from "../utils";
+import { validateProfileImage } from "../utils/profileImage";
+import { EmailUtils } from "../utils/emailChecker";
 export class UserLogic {
    private repository: UserRepository;
    private crypto: Crypto;
@@ -14,10 +16,7 @@ export class UserLogic {
 
    async getMe(req: Request, res: Response): Promise<UserDTO[] | {}> {
       try {
-         if (typeof req.headers.cookie !== "string") {
-            throw new Error("Token is not a string");
-         }
-         const formattedToken = req.headers.cookie?.split("token=")[1];
+         const formattedToken = JWTTokenUtils.formatToken(req.headers.cookie);
          const token = JWTTokenUtils.decode(formattedToken);
          if (token === null || typeof token !== "object") {
             throw new Error("Invalid token on request");
@@ -59,9 +58,18 @@ export class UserLogic {
 
    async createUser(req: Request, res: Response): Promise<UserDTO> {
       try {
-         const { email, username, password, birthdate, fullname } = req.body;
+         const {
+            email,
+            username,
+            password,
+            birthdate,
+            fullname,
+            profileImage,
+         } = req.body;
 
-         const userExists = await this.repository.getUserByEmail(email);
+         const emailUtils = new EmailUtils();
+         const userExists = await emailUtils.getUserByEmail(email);
+
          if (userExists) {
             throw new Error("This user already exists");
          } else {
@@ -69,8 +77,22 @@ export class UserLogic {
             const today = new Date();
             const convertedBirthDate = new Date(birthdate);
             const diffInMs = today.getTime() - convertedBirthDate.getTime();
-            const age = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365.25));
             //
+            console.log("passou do getUserEmail");
+            //profileImage check
+            let profileImageBuffer: Buffer | null = null;
+            if (profileImage) {
+               const validatedProfileImage = validateProfileImage(profileImage);
+
+               console.log(
+                  profileImage,
+                  "profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- profile IMAGE --------------- "
+               );
+               const profileImageContents = await fs.promises.readFile(
+                  profileImage.path
+               );
+               profileImageBuffer = Buffer.from(profileImageContents);
+            }
 
             const newUser = {
                email: email,
@@ -78,8 +100,8 @@ export class UserLogic {
                fullname: fullname,
                birthDate: convertedBirthDate,
                password: await this.crypto.encryptString(password),
+               profileImage: profileImageBuffer || null,
             };
-
             const response = await this.repository.createUser(newUser);
             return response;
          }
@@ -89,7 +111,14 @@ export class UserLogic {
    }
    async updateUser(req: Request, res: Response): Promise<UserDTO> {
       try {
-         const { email, username, password, birthDate, fullname } = req.body;
+         const {
+            email,
+            username,
+            password,
+            birthDate,
+            fullname,
+            profileImage,
+         } = req.body;
          if (typeof req.headers["x-access-token"] !== "string") {
             throw new Error("Token is not a string");
          }
@@ -102,6 +131,7 @@ export class UserLogic {
                fullname: fullname,
                birthDate: new Date(birthDate),
                password: password,
+               profileImage: profileImage,
             };
             const response = await this.repository.updateUser(updatedUser);
             return response;

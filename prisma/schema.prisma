@@ -9,16 +9,17 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  username  String    @unique @db.VarChar(100)
-  fullname  String    @db.VarChar(100)
-  birthDate DateTime
-  password  String
-  routineId String?   @unique
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @default(now()) @map("updated_at")
-  Routine   Routine[]
+  id           String    @id @default(uuid())
+  email        String    @unique
+  username     String    @unique @db.VarChar(100)
+  fullname     String    @db.VarChar(100)
+  birthDate    DateTime
+  password     String
+  routineId    String?   @unique
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  profileImage Bytes?
+  Routine      Routine[]
 
   @@map("users")
 }

@@ -5,19 +5,16 @@ import { JWTTokenUtils } from "../utils";
 const controller = new UserController();
 const router = Router();
 
-router
-   .route("/me$")
-   .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
-      JWTTokenUtils.verify(token);
-      controller.getMe(req, res, next);
-   });
-
+router.route("/me$").get((req: Request, res: Response, next: NextFunction) => {
+   const token = JWTTokenUtils.formatToken(req.headers.cookie);
+   JWTTokenUtils.verify(token);
+   controller.getMe(req, res, next);
+});
 
 router
    .route("/users$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getUsers(req, res, next);
    });
@@ -25,7 +22,7 @@ router
 router
    .route("/users/:id")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.getUserById(req, res, next);
    });
@@ -33,7 +30,7 @@ router
 router
    .route("/users$")
    .put((req: Request, res: Response, next: NextFunction) => {
-      const token = req.headers["x-access-token"] as string;
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
       controller.updateUser(req, res, next);
    });

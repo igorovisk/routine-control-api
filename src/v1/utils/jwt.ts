@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 export class JWTTokenUtils {
    static sign(
       data: object,
@@ -12,22 +12,30 @@ export class JWTTokenUtils {
 
    static verify(token: string) {
       try {
-         
          return jwt.verify(token, process.env.JWT_SECRET || "");
       } catch (error) {
          throw new Error(`Token is invalid / User is not logged in.`);
       }
    }
 
-   static decode(token: string): string | jwt.JwtPayload | null{
+   static decode(token: string): string | jwt.JwtPayload | null {
       try {
-         if (typeof token !== 'string') {
-            throw new Error('Token is not a string');
-          }
+         if (typeof token !== "string") {
+            throw new Error("Token is not a string");
+         }
          return jwt.decode(token);
       } catch (error) {
          console.log(error, "error decoding token log");
          throw new Error("Error decoding the token");
       }
+   }
+
+   static formatToken(cookies: string | undefined) {
+      if (typeof cookies !== "string") {
+         throw new Error("Token is not a string");
+      }
+      const formattedToken = cookies?.split("token=")[1];
+
+      return formattedToken;
    }
 }
