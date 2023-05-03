@@ -11,6 +11,7 @@ export class UserController {
    async getMe(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getMe(req, res);
+         console.log(response, 'get me')
          return res.status(200).send(response);
       } catch (error) {
          next(error);
@@ -20,6 +21,7 @@ export class UserController {
    async getUsers(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getUsers(req, res);
+         console.log(response, 'get users')
          return res.status(200).send(response);
       } catch (error) {
          next(error);
@@ -28,6 +30,7 @@ export class UserController {
    async getUserById(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getUserById(req, res);
+         console.log(response, 'get user by Id')
          return res.status(200).send(response);
       } catch (error) {
          next(error);

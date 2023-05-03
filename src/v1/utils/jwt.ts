@@ -30,12 +30,13 @@ export class JWTTokenUtils {
       }
    }
 
-   static formatToken(cookies: string | undefined) {
-      if (typeof cookies !== "string") {
-         throw new Error("Token is not a string");
+   static formatToken(cookies: string | undefined): string {
+      try {
+         const formattedToken = cookies?.split("token=")[1];
+         return formattedToken || "";
+      } catch (error) {
+         console.log(error, "error formatting token log");
+         return "";
       }
-      const formattedToken = cookies?.split("token=")[1];
-
-      return formattedToken;
    }
 }

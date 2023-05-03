@@ -14,31 +14,55 @@ router.route("/me$").get((req: Request, res: Response, next: NextFunction) => {
 router
    .route("/users$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = JWTTokenUtils.formatToken(req.headers.cookie);
-      JWTTokenUtils.verify(token);
-      controller.getUsers(req, res, next);
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         controller.getUsers(req, res, next);
+      } catch (error) {
+         //TODO ERROR MESSAGE NOT BEING DISPLAYED
+         res.status(401).json(error);
+         console.error(error);
+      }
    });
 
 router
    .route("/users/:id")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = JWTTokenUtils.formatToken(req.headers.cookie);
-      JWTTokenUtils.verify(token);
-      controller.getUserById(req, res, next);
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         controller.getUserById(req, res, next);
+      } catch (error) {
+         //TODO ERROR MESSAGE NOT BEING DISPLAYED
+         res.status(401).json(error);
+         console.error(error);
+      }
    });
 
 router
    .route("/users$")
    .put((req: Request, res: Response, next: NextFunction) => {
-      const token = JWTTokenUtils.formatToken(req.headers.cookie);
-      JWTTokenUtils.verify(token);
-      controller.updateUser(req, res, next);
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         controller.updateUser(req, res, next);
+      } catch (error) {
+         //TODO ERROR MESSAGE NOT BEING DISPLAYED
+         res.status(401).json(error);
+         console.error(error);
+      }
    });
 
 router
    .route("/users$")
    .post((req: Request, res: Response, next: NextFunction) => {
-      controller.createUser(req, res, next);
+      try {
+         controller.createUser(req, res, next);
+      } catch (error) {
+         //TODO ERROR MESSAGE NOT BEING DISPLAYED
+         res.status(401).json(error);
+         console.error(error);
+      }
    });
 
 export { router as UserRouter };
