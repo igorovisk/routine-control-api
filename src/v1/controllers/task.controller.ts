@@ -37,7 +37,7 @@ export class TaskController {
    }
    async putTask(req: Request, res: Response, next: NextFunction) {
       try {
-         const updatedTask = await this.logic.updateTask(req, res);
+         const updatedTask = await this.logic.putTask(req, res);
          return updatedTask;
       } catch (error) {
          next(error);

@@ -32,8 +32,8 @@ export class RoutineLogic {
 
    async createRoutine(req: Request, res: Response) {
       try {
-         const { name, description, userId } = req.body;
-
+         const { name, description } = req.body;
+         const {userId} = req.params
          const newRoutine = {
             name: name,
             description: description,

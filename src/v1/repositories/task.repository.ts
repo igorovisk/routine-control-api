@@ -39,7 +39,7 @@ export class TaskRepository {
       }
    }
 
-   async updateTask(task: TaskInterface): Promise<TaskDTO> {
+   async putTask(task: TaskInterface): Promise<TaskDTO> {
       try {
          const updatedTask = await prisma.task.update({
             where: { id: task.id },

@@ -6,7 +6,7 @@ const controller = new TaskController();
 const router = Router();
 
 router
-   .route("/tasks$")
+   .route("/user/:userId/routines/:routineId/tasks$")
    .get((req: Request, res: Response, next: NextFunction) => {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
@@ -14,7 +14,7 @@ router
    });
 
 router
-   .route("/tasks/:id")
+   .route("/user/:userId/routines/:routineId/tasks/:taskId")
    .get((req: Request, res: Response, next: NextFunction) => {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
@@ -22,7 +22,7 @@ router
    });
 
 router
-   .route("/tasks$")
+   .route("/user/:userId/routines/:routineId/tasks")
    .post((req: Request, res: Response, next: NextFunction) => {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
@@ -30,11 +30,11 @@ router
    });
 
 router
-   .route("/tasks$")
+   .route("/user/:userId/routines/:routineId/tasks/:taskId")
    .put((req: Request, res: Response, next: NextFunction) => {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);
-      controller.createTask(req, res, next);
+      controller.putTask(req, res, next);
    });
 
 export { router as TaskRouter };

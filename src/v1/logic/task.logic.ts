@@ -47,7 +47,7 @@ export class TaskLogic {
       }
    }
 
-   async updateTask(req: Request, res: Response) {
+   async putTask(req: Request, res: Response) {
       try {
          const { description, comment, routineId, taskId } = req.body;
 
@@ -58,7 +58,7 @@ export class TaskLogic {
             routineId: routineId,
          };
 
-         const response = await this.repository.updateTask(updatedTask);
+         const response = await this.repository.putTask(updatedTask);
          return response;
       } catch (error) {
          console.log("error on task logic...");
