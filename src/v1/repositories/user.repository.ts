@@ -30,18 +30,20 @@ export class UserRepository {
                },
             },
          });
-         console.log(me, 'mE')
+         console.log(me, "mE");
          if (!me) {
             return {};
          }
          return {
             id: me.id,
+            name: me.fullname,
             email: me.email,
             username: me.username,
             birthDate: me.birthDate,
             routineId: me.routineId,
             Routine: me.Routine,
-            profileImage: me.profileImage
+            profileImage: me.profileImage,
+            role: me.role,
          };
       } catch (error) {
          console.log(error, "Error getting all users from database.");
@@ -59,7 +61,6 @@ export class UserRepository {
                      name: true,
                      description: true,
                      tasks: true,
-                     
                   },
                },
             },

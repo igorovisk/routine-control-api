@@ -18,9 +18,6 @@ export class UserLogic {
       try {
          const formattedToken = JWTTokenUtils.formatToken(req.headers.cookie);
          const token = JWTTokenUtils.decode(formattedToken);
-         if (token === null || typeof token !== "object") {
-            throw new Error("Invalid token on request");
-         }
          const response = await this.repository.getMe(token.user.id);
          return response;
       } catch (error) {
@@ -48,8 +45,8 @@ export class UserLogic {
 
    async getUserById(req: Request, res: Response): Promise<UserDTO | {}> {
       try {
-         const { id } = req.params;
-         const response = await this.repository.getUserById(id);
+         const { userId } = req.params;
+         const response = await this.repository.getUserById(userId);
          return response;
       } catch (error) {
          throw error;
@@ -95,6 +92,7 @@ export class UserLogic {
                birthDate: convertedBirthDate,
                password: await this.crypto.encryptString(password),
                profileImage: profileImageBuffer || null,
+               role: "user",
             };
             const response = await this.repository.createUser(newUser);
             return response;
@@ -113,13 +111,14 @@ export class UserLogic {
             fullname,
             profileImage,
          } = req.body;
+
          if (typeof req.headers["x-access-token"] !== "string") {
             throw new Error("Token is not a string");
          }
          const token = JWTTokenUtils.decode(req.headers["x-access-token"]);
          if (typeof token === "object" && token !== null) {
             const updatedUser = {
-               id: token.user.id,
+               id: req.params.userId,
                email: email,
                username: username,
                fullname: fullname,

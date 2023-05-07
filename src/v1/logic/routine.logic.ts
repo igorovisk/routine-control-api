@@ -12,6 +12,7 @@ export class RoutineLogic {
    async getAllRoutines(req: Request, res: Response): Promise<RoutineDTO[]> {
       try {
          const response = await this.repository.getAllRoutines();
+         
          return response;
       } catch (error) {
          console.log("error on routine logic...");

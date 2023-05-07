@@ -6,4 +6,5 @@ export interface UserInterface {
    password: string;
    routineId?: string;
    profileImage?: Buffer | null | undefined;
+   role: string;
 }

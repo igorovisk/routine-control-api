@@ -18,12 +18,12 @@ export class JWTTokenUtils {
       }
    }
 
-   static decode(token: string): string | jwt.JwtPayload | null {
+   static decode(token: string): jwt.JwtPayload {
       try {
-         if (typeof token !== "string") {
+         if (typeof token !== "string" || token === null) {
             throw new Error("Token is not a string");
          }
-         return jwt.decode(token);
+         return jwt.decode(token) as JwtPayload;
       } catch (error) {
          console.log(error, "error decoding token log");
          throw new Error("Error decoding the token");
