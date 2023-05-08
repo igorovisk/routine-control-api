@@ -36,7 +36,7 @@ export class UserRepository {
          }
          return {
             id: me.id,
-            name: me.fullname,
+            fullname: me.fullname,
             email: me.email,
             username: me.username,
             birthDate: me.birthDate,

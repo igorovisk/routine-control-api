@@ -1,17 +1,16 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { RoutineController } from "../controllers";
 import { JWTTokenUtils } from "../utils";
+import { Middleware } from "../middlewares";
 
 const controller = new RoutineController();
 const router = Router();
+const middleware = new Middleware();
 
 router
    .route("/user/:userId/routines$")
    .get((req: Request, res: Response, next: NextFunction) => {
-      const token = JWTTokenUtils.formatToken(req.headers.cookie);
-      JWTTokenUtils.verify(token);
-      //TODO PASSAR NO REQ HEADERS? ONDE PASSAR O ROLE PARA O REPOSITORY RETORNAR TODAS AS ROTINAS?
-      //TODO OU POSSO CRIAR OUTRA ROTA CHAMADA SÓ ROTINAS PARA RETORNAR TUDO E SOMENTE ADM PODE USAR
+      middleware.checkIfAdminMiddleware(req);
       controller.getAllRoutines(req, res, next);
    });
 

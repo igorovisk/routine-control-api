@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-export  class EmailUtils {
+export class EmailUtils {
 
 async getUserByEmail(email?: string): Promise<Boolean> {
     try {

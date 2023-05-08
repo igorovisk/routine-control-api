@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { TaskController } from "../controllers";
 import { JWTTokenUtils } from "../utils";
-
 const controller = new TaskController();
 const router = Router();
-
 router
    .route("/user/:userId/routines/:routineId/tasks$")
    .get((req: Request, res: Response, next: NextFunction) => {

@@ -5,13 +5,15 @@ import { UserRepository } from "../repositories";
 import { Crypto, JWTTokenUtils } from "../utils";
 import { validateProfileImage } from "../utils/profileImage";
 import { EmailUtils } from "../utils/emailChecker";
+import { Middleware } from "../middlewares";
 export class UserLogic {
    private repository: UserRepository;
    private crypto: Crypto;
-
+   private middleware: Middleware;
    constructor() {
       this.repository = new UserRepository();
       this.crypto = new Crypto();
+      this.middleware = new Middleware();
    }
 
    async getMe(req: Request, res: Response): Promise<UserDTO[] | {}> {
@@ -98,10 +100,11 @@ export class UserLogic {
             return response;
          }
       } catch (error) {
+         console.log(error, "ERRO CAPTURADO");
          throw error;
       }
    }
-   async updateUser(req: Request, res: Response): Promise<UserDTO> {
+   async updateUser(req: Request, res: Response): Promise<UserDTO | undefined> {
       try {
          const {
             email,
@@ -112,25 +115,21 @@ export class UserLogic {
             profileImage,
          } = req.body;
 
-         if (typeof req.headers["x-access-token"] !== "string") {
-            throw new Error("Token is not a string");
-         }
-         const token = JWTTokenUtils.decode(req.headers["x-access-token"]);
-         if (typeof token === "object" && token !== null) {
-            const updatedUser = {
-               id: req.params.userId,
-               email: email,
-               username: username,
-               fullname: fullname,
-               birthDate: new Date(birthDate),
-               password: password,
-               profileImage: profileImage,
-            };
-            const response = await this.repository.updateUser(updatedUser);
-            return response;
-         }
-         throw new Error("Error on decoded token");
+         await this.middleware.isUserLoggedOrAdmin(req);
+
+         const updatedUser = {
+            id: req.params.userId,
+            email: email,
+            username: username,
+            fullname: fullname,
+            birthDate: new Date(birthDate),
+            password: await this.crypto.encryptString(password),
+            profileImage: profileImage,
+         };
+         const response = await this.repository.updateUser(updatedUser);
+         return response;
       } catch (error) {
+         console.log(error, "ERROR CAPTURED!");
          throw error;
       }
    }
