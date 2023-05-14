@@ -17,6 +17,16 @@ export class TaskController {
          console.log(error, "<- Get Tasks Error...");
       }
    }
+
+   async getRoutineTasks(req: Request, res: Response, next: NextFunction) {
+      try {
+         const tasks = await this.logic.getRoutineTasks(req, res);
+         return res.status(200).send(tasks);
+      } catch (error) {
+         next(error);
+         console.log(error, "<- Get Tasks Error...");
+      }
+   }
    async getTaskById(req: Request, res: Response, next: NextFunction) {
       try {
          const task = await this.logic.getTaskById(req, res);

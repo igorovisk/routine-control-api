@@ -21,7 +21,6 @@ router
          await controller.getUsers(req, res, next);
       } catch (error) {
          const err = error as Error;
-         console.error(error);
          res.status(401).json({ error: err.message });
       }
    });
@@ -34,7 +33,6 @@ router
          await controller.getUserById(req, res, next);
       } catch (error) {
          const err = error as Error;
-         console.error(error);
          res.status(401).json({ error: err.message });
       }
    });
@@ -59,7 +57,6 @@ router
          await controller.createUser(req, res, next);
       } catch (error) {
          const err = error as Error;
-         console.error(error);
          res.status(401).json({ error: err.message });
       }
    });

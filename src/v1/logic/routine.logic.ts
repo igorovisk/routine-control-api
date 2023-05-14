@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { RoutineDTO } from "../interfaces/dtos";
 import { RoutineRepository } from "../repositories";
-
+import { Middleware } from "../middlewares";
 export class RoutineLogic {
    private repository: RoutineRepository;
-
+   private middleware: Middleware
    constructor() {
       this.repository = new RoutineRepository();
+      this.middleware = new Middleware();
    }
 
    async getAllRoutines(req: Request, res: Response): Promise<RoutineDTO[]> {
@@ -51,17 +52,21 @@ export class RoutineLogic {
 
    async updateRoutine(req: Request, res: Response) {
       try {
-         const { description, comment, userId, name, routineId } = req.body;
 
+         const { description, comment, name, routineId } = req.body;
+        
          const updatedRoutine = {
             id: routineId,
             name: name,
             description: description,
             comment: comment,
-            userId: userId,
+            userId: req.params.userId,
          };
 
+         await this.middleware.isUserLoggedOrAdmin(req);
+
          const response = await this.repository.updateRoutine(updatedRoutine);
+         
          return response;
       } catch (error) {
          console.log("error on routine logic...");

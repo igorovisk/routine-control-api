@@ -13,6 +13,25 @@ export class TaskRepository {
          throw error;
       }
    }
+   async getRoutineTasks(
+      userId: string,
+      routineId: string
+   ): Promise<TaskDTO[]> {
+      try {
+         const tasks = await prisma.task.findMany({
+            where: {
+               routine: {
+                  userId,
+                  id: routineId,
+               },
+            },
+         });
+         return tasks;
+      } catch (error) {
+         console.log(error, "Error getting all TASKS from database.");
+         throw error;
+      }
+   }
 
    async getTaskById(id: string): Promise<TaskDTO | {}> {
       try {

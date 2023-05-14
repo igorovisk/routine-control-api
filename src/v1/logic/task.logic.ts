@@ -19,6 +19,20 @@ export class TaskLogic {
       }
    }
 
+   async getRoutineTasks(req: Request, res: Response): Promise<TaskDTO[]> {
+      try {
+         const { userId, routineId } = req.params;
+         const response = await this.repository.getRoutineTasks(
+            userId,
+            routineId
+         );
+         return response;
+      } catch (error) {
+         console.log("error on task logic...");
+         throw error;
+      }
+   }
+
    async getTaskById(req: Request, res: Response) {
       try {
          const { id } = req.params;
@@ -32,7 +46,8 @@ export class TaskLogic {
 
    async createTask(req: Request, res: Response) {
       try {
-         const { description, comment, routineId } = req.body;
+         const { description, comment } = req.body;
+         const { routineId } = req.params;
 
          const newTask = {
             description: description,
@@ -57,6 +72,7 @@ export class TaskLogic {
             comment: comment,
             routineId: routineId,
          };
+         // await this.middleware.isUserLoggedOrAdmin(req);
 
          const response = await this.repository.putTask(updatedTask);
          return response;
