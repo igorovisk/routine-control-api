@@ -30,7 +30,7 @@ export class UserRepository {
                },
             },
          });
-         console.log(me, "mE");
+         console.log(me, "/getMe -> This is my user");
          if (!me) {
             return {};
          }

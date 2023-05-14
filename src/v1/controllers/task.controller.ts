@@ -18,9 +18,9 @@ export class TaskController {
       }
    }
 
-   async getRoutineTasks(req: Request, res: Response, next: NextFunction) {
+   async getTasksByRoutine(req: Request, res: Response, next: NextFunction) {
       try {
-         const tasks = await this.logic.getRoutineTasks(req, res);
+         const tasks = await this.logic.getTasksByRoutine(req, res);
          return res.status(200).send(tasks);
       } catch (error) {
          next(error);

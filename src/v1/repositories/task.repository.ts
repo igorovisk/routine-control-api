@@ -13,7 +13,7 @@ export class TaskRepository {
          throw error;
       }
    }
-   async getRoutineTasks(
+   async getTasksByRoutine(
       userId: string,
       routineId: string
    ): Promise<TaskDTO[]> {

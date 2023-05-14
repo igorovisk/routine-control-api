@@ -14,7 +14,7 @@ router
          const token = JWTTokenUtils.formatToken(req.headers.cookie);
          JWTTokenUtils.verify(token);
          await middleware.checkIfAdminMiddleware(req);
-         await controller.getRoutineTasks(req, res, next);
+         await controller.getTasksByRoutine(req, res, next);
       } catch (error) {
          const err = error as Error;
          res.status(401).json({ error: err.message });

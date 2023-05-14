@@ -19,10 +19,10 @@ export class TaskLogic {
       }
    }
 
-   async getRoutineTasks(req: Request, res: Response): Promise<TaskDTO[]> {
+   async getTasksByRoutine(req: Request, res: Response): Promise<TaskDTO[]> {
       try {
          const { userId, routineId } = req.params;
-         const response = await this.repository.getRoutineTasks(
+         const response = await this.repository.getTasksByRoutine(
             userId,
             routineId
          );
