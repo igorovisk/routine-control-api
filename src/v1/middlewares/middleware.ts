@@ -38,3 +38,5 @@ export class Middleware {
       next();
    }
 }
+
+export default Middleware;

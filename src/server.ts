@@ -1,9 +1,10 @@
 import express, { Express, Request, Response, json } from "express";
 import { RoutineRouter, TaskRouter, UserRouter, AuthRouter } from "./v1/routes";
-import { Middleware } from "./v1/middlewares";
+import { Middleware } from "./v1/middlewares/middleware";
 require("dotenv").config();
-
+const port = process.env.PORT;
 var cors = require("cors");
+const middleware = new Middleware();
 const corsOrigin = {
    origin: "http://localhost:3000", //or whatever port your frontend is using
    credentials: true,
@@ -11,30 +12,10 @@ const corsOrigin = {
 };
 const app = express();
 app.use(cors(corsOrigin));
-
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//    apiKey: "AIzaSyCw__fXboWweQqt3BIo43nkGq4EFUtqSlo",
-//    authDomain: "routine-control-93e9c.firebaseapp.com",
-//    projectId: "routine-control-93e9c",
-//    storageBucket: "routine-control-93e9c.appspot.com",
-//    messagingSenderId: "450951022448",
-//    appId: "1:450951022448:web:a55196e8e486d4dbadb1b5",
-//    measurementId: "G-7YEBHBHRD7",
-// };
-
-// Initialize Firebase
-// const firebase = initializeApp(firebaseConfig);
-
-const port = process.env.PORT;
+app.use((req, res, next) => {
+   middleware.loggerMiddleware(req, next);
+});
 app.use(json());
-
 app.use(AuthRouter, UserRouter, TaskRouter, RoutineRouter);
 
 export class Server {

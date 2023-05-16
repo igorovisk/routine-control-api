@@ -14,7 +14,6 @@ type UpdatedUserDate = {
    routineId?: string;
 };
 export class UserRepository {
-   //Returns basic logged userInfo
    async getMe(id: string): Promise<UserDTO[] | {}> {
       try {
          const me = await prisma.user.findUnique({
