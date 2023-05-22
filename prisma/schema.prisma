@@ -21,6 +21,7 @@ model User {
   updatedAt    DateTime  @default(now()) @map("updated_at")
   profileImage Bytes?
   Routine      Routine[]
+  Log          Log[]
 
   @@map("users")
 }
@@ -49,4 +50,13 @@ model Routine {
   tasks       Task[]
 
   @@map("routines")
+}
+
+model Log {
+  id        String   @id @default(uuid())
+  message   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 }

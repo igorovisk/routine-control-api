@@ -4,7 +4,7 @@ import { RoutineRepository } from "../repositories";
 import { Middleware } from "../middlewares";
 export class RoutineLogic {
    private repository: RoutineRepository;
-   private middleware: Middleware
+   private middleware: Middleware;
    constructor() {
       this.repository = new RoutineRepository();
       this.middleware = new Middleware();
@@ -13,7 +13,7 @@ export class RoutineLogic {
    async getAllRoutines(req: Request, res: Response): Promise<RoutineDTO[]> {
       try {
          const response = await this.repository.getAllRoutines();
-         
+
          return response;
       } catch (error) {
          console.log("error on routine logic...");
@@ -21,7 +21,7 @@ export class RoutineLogic {
       }
    }
 
-   async getRoutineById(req: Request, res: Response) {
+   async getRoutineById(req: Request, res: Response): Promise<RoutineDTO | {}> {
       try {
          const { id } = req.params;
          const response = await this.repository.getRoutineById(id);
@@ -32,10 +32,10 @@ export class RoutineLogic {
       }
    }
 
-   async createRoutine(req: Request, res: Response) {
+   async createRoutine(req: Request, res: Response): Promise<RoutineDTO> {
       try {
          const { name, description } = req.body;
-         const {userId} = req.params
+         const { userId } = req.params;
          const newRoutine = {
             name: name,
             description: description,
@@ -50,11 +50,10 @@ export class RoutineLogic {
       }
    }
 
-   async updateRoutine(req: Request, res: Response) {
+   async updateRoutine(req: Request, res: Response): Promise<RoutineDTO> {
       try {
-
          const { description, comment, name, routineId } = req.body;
-        
+
          const updatedRoutine = {
             id: routineId,
             name: name,
@@ -66,7 +65,7 @@ export class RoutineLogic {
          await this.middleware.isUserLoggedOrAdmin(req);
 
          const response = await this.repository.updateRoutine(updatedRoutine);
-         
+
          return response;
       } catch (error) {
          console.log("error on routine logic...");
