@@ -3,11 +3,22 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class LogRepository {
-   async postLog(log: any): Promise<void> {
+   async postLog(log: LogInterface): Promise<void> {
       try {
-         await prisma.log.create({ data: log });
+         const { userId, userEmail, username, userRole, method, url } = log;
+
+         await prisma.log.create({
+            data: {
+               userId,
+               userEmail,
+               username,
+               userRole,
+               method,
+               url,
+            },
+         });
       } catch (error) {
-         console.log(error, "error creating log");
+         console.error("Error creating log", error);
       }
    }
 }

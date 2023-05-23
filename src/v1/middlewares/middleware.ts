@@ -1,6 +1,7 @@
 import { JWTTokenUtils } from "../utils";
 import { NextFunction, Request } from "express";
 import { LogController } from "../controllers/log.controller";
+import { LogInterface } from "../interfaces";
 export class Middleware {
    async checkIfAdminMiddleware(req: Request) {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
@@ -32,36 +33,29 @@ export class Middleware {
    }
 
    async loggerMiddleware(req: Request, next: NextFunction): Promise<void> {
-      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         const decodedToken = JWTTokenUtils.decode(token);
+         let user;
+         if (decodedToken) {
+            user = decodedToken.user``;
+         }
 
-      const decodedToken = JWTTokenUtils.decode(token);
-      const { user } = decodedToken;
-      const userMessage = `USER: 
-      id: ${user.id}
-      email: ${user.email}
-      username: ${user.username}
-      role: ${user.role}
-      `;
+         const log: LogInterface = {
+            userId: user?.id,
+            userEmail: user?.email || "",
+            username: user?.username || "",
+            userRole: user?.role || "",
+            method: req?.method || "",
+            url: req?.url || "",
+         };
 
-      const messageToLog = `${
-         user ? "REQUEST MADE BY:" + userMessage : ""
-      }   \nREQUEST DATE: [${new Date()}] \nREQUEST METHOD: ${
-         req.method
-      }\nREQUEST URL${req.url} `;
-
-      const log = {
-         user: {
-            id: user.id,
-            email: user.email,
-            username: user.email,
-            role: user.role,
-         },
-         message: messageToLog,
-      };
-
-      const logController = new LogController();
-      await logController.createLog(log);
-      next();
+         const logController = new LogController();
+         await logController.createLog(log);
+         next();
+      } catch (error) {
+         console.log(error);
+      }
    }
 }
 

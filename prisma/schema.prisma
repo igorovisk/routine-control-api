@@ -43,7 +43,7 @@ model Routine {
   id          String   @id @default(uuid())
   name        String
   description String?
-  userId      String
+  userId      String   @unique
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @map("updated_at")
@@ -54,9 +54,15 @@ model Routine {
 
 model Log {
   id        String   @id @default(uuid())
-  message   String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  userId    String?
+  userEmail String?
+  userRole  String?
+  username  String?
+  method    String?
+  url       String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
+  User      User?    @relation(fields: [userId], references: [id])
+
+  @@map("logs")
 }
