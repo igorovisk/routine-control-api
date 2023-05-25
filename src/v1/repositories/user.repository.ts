@@ -112,9 +112,10 @@ export class UserRepository {
             where: { id: updatedUserData.id },
             data: updatedUserData,
          });
+
          return updatedUser;
       } catch (error) {
-         throw error;
+         throw { message: "username or email is already taken. " };
       }
    }
 

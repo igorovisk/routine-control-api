@@ -10,7 +10,7 @@ export class UserLogic {
    private repository: UserRepository;
    private crypto: Crypto;
    private middleware: Middleware;
-   
+
    constructor() {
       this.repository = new UserRepository();
       this.crypto = new Crypto();
@@ -127,6 +127,7 @@ export class UserLogic {
             password: await this.crypto.encryptString(password),
             profileImage: profileImage,
          };
+
          const response = await this.repository.updateUser(updatedUser);
          return response;
       } catch (error) {

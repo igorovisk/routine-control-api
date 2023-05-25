@@ -38,7 +38,7 @@ export class Middleware {
          const decodedToken = JWTTokenUtils.decode(token);
          let user;
          if (decodedToken) {
-            user = decodedToken.user``;
+            user = decodedToken.user;
          }
 
          const log: LogInterface = {
