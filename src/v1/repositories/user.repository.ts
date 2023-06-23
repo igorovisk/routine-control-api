@@ -29,7 +29,6 @@ export class UserRepository {
                },
             },
          });
-         console.log(me, "/getMe -> This is my user");
          if (!me) {
             return {};
          }
@@ -40,7 +39,7 @@ export class UserRepository {
             username: me.username,
             birthDate: me.birthDate,
             routineId: me.routineId,
-            Routine: me.Routine,
+            routines: me.Routine,
             profileImage: me.profileImage,
             role: me.role,
          };
