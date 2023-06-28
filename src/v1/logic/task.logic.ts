@@ -46,10 +46,11 @@ export class TaskLogic {
 
    async createTask(req: Request, res: Response) {
       try {
-         const { description, comment } = req.body;
+         const { name, description, comment } = req.body;
          const { routineId } = req.params;
 
          const newTask = {
+            name: name,
             description: description,
             comment: comment,
             routineId: routineId,
@@ -64,10 +65,11 @@ export class TaskLogic {
 
    async putTask(req: Request, res: Response) {
       try {
-         const { description, comment, routineId, taskId } = req.body;
+         const { name, description, comment, routineId, taskId } = req.body;
 
          const updatedTask = {
             id: taskId,
+            name: name,
             description: description,
             comment: comment,
             routineId: routineId,

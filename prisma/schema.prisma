@@ -29,6 +29,7 @@ model User {
 model Task {
   id          String   @id @default(uuid())
   routineId   String
+  name        String
   routine     Routine  @relation(fields: [routineId], references: [id])
   description String?
   done        Boolean  @default(false)
