@@ -33,7 +33,7 @@ model Task {
   routine     Routine  @relation(fields: [routineId], references: [id])
   description String?
   done        Boolean  @default(false)
-  comment     String
+  comment     String?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @map("updated_at")
 

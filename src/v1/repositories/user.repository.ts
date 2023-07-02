@@ -24,13 +24,19 @@ export class UserRepository {
                      id: true,
                      name: true,
                      description: true,
-                     tasks: true,
+                     tasks: {
+                        select: {
+                           id: true,
+                           name: true,
+                           description: true,
+                        },
+                     },
                   },
                },
             },
          });
          if (!me) {
-            return {};
+            throw new Error("User not found");
          }
          return {
             id: me.id,
