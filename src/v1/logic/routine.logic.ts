@@ -34,12 +34,13 @@ export class RoutineLogic {
 
    async createRoutine(req: Request, res: Response): Promise<RoutineDTO> {
       try {
-         const { name, description } = req.body;
+         const { name, description, color } = req.body;
          const { userId } = req.params;
          const newRoutine = {
             name: name,
             description: description,
             userId: userId,
+            color: color,
          };
 
          const response = await this.repository.createRoutine(newRoutine);

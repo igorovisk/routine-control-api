@@ -46,6 +46,7 @@ model Routine {
   description String?
   userId      String   @unique
   user        User     @relation(fields: [userId], references: [id])
+  color       String   @default("white")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @map("updated_at")
   tasks       Task[]

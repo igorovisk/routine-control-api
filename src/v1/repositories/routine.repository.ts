@@ -32,7 +32,6 @@ export class RoutineRepository {
 
    async createRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
       try {
-         console.log(routine, "routine");
          const newRoutine = await prisma.routine.create({ data: routine });
          return newRoutine;
       } catch (error) {
