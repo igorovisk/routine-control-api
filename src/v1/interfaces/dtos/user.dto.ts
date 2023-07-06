@@ -8,7 +8,6 @@ export interface UserDTO {
    birthDate: Date;
    createdAt: Date;
    updatedAt: Date;
-   routineId?: string | null;
    routine?: RoutineDTO[] | null;
    profileImage?: Buffer | null;
    role: string;

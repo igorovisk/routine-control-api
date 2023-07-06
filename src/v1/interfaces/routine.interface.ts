@@ -3,4 +3,5 @@ export interface RoutineInterface {
    name: string;
    description?: string;
    userId: string;
+   color: string;
 }

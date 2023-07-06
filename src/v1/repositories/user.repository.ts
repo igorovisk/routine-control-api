@@ -11,7 +11,6 @@ type UpdatedUserDate = {
    fullname: string;
    birthDate: Date;
    password: string;
-   routineId?: string;
 };
 export class UserRepository {
    async getMe(id: string): Promise<UserDTO[] | {}> {
@@ -24,6 +23,7 @@ export class UserRepository {
                      id: true,
                      name: true,
                      description: true,
+                     color: true,
                      tasks: {
                         select: {
                            id: true,
@@ -44,7 +44,6 @@ export class UserRepository {
             email: me.email,
             username: me.username,
             birthDate: me.birthDate,
-            routineId: me.routineId,
             routines: me.Routine,
             profileImage: me.profileImage,
             role: me.role,

@@ -4,7 +4,6 @@ export interface UserInterface {
    fullname: string;
    birthDate: Date;
    password: string;
-   routineId?: string;
    profileImage?: Buffer | null | undefined;
    role: string;
 }

@@ -13,7 +13,6 @@ export class RoutineLogic {
    async getAllRoutines(req: Request, res: Response): Promise<RoutineDTO[]> {
       try {
          const response = await this.repository.getAllRoutines();
-
          return response;
       } catch (error) {
          console.log("error on routine logic...");
@@ -53,7 +52,7 @@ export class RoutineLogic {
 
    async updateRoutine(req: Request, res: Response): Promise<RoutineDTO> {
       try {
-         const { description, comment, name, routineId } = req.body;
+         const { description, comment, name, routineId, color } = req.body;
 
          const updatedRoutine = {
             id: routineId,
@@ -61,6 +60,7 @@ export class RoutineLogic {
             description: description,
             comment: comment,
             userId: req.params.userId,
+            color: color,
          };
 
          await this.middleware.isUserLoggedOrAdmin(req);
