@@ -50,8 +50,8 @@ export class Middleware {
             url: req?.url || "",
          };
 
-         const logController = new LogController();
-         await logController.createLog(log);
+         // const logController = new LogController();
+         // await logController.createLog(log);
          next();
       } catch (error) {
          console.log(error);

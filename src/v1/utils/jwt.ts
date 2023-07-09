@@ -12,7 +12,8 @@ export class JWTTokenUtils {
 
    static verify(token: string) {
       try {
-         return jwt.verify(token, process.env.JWT_SECRET || "");
+         const tokenVerify = token.split(";")[0];
+         return jwt.verify(tokenVerify, process.env.JWT_SECRET || "");
       } catch (error) {
          throw new Error(`Token is invalid / User is not logged in.`);
       }
@@ -32,7 +33,8 @@ export class JWTTokenUtils {
 
    static formatToken(cookies: string | undefined): string {
       try {
-         const formattedToken = cookies?.split("token=")[1];
+         let formattedToken = cookies?.split("token=")[1];
+         formattedToken = formattedToken?.split(";")[0];
          return formattedToken || "";
       } catch (error) {
          console.log(error, "error formatting token log");

@@ -54,4 +54,14 @@ export class TaskController {
          console.log(error, "<- Create Task Error...");
       }
    }
+
+   async deleteTask(req: Request, res: Response, next: NextFunction) {
+      try {
+         const deletedTask = await this.logic.deleteTask(req, res);
+         return res.status(200).send(deletedTask);
+      } catch (error) {
+         next(error);
+         console.log(error, "<- Create Task Error...");
+      }
+   }
 }

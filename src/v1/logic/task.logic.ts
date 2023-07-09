@@ -79,7 +79,23 @@ export class TaskLogic {
          const response = await this.repository.putTask(updatedTask);
          return response;
       } catch (error) {
-         console.log("error on task logic...");
+         console.log("Error on task logic...");
+         throw error;
+      }
+   }
+
+   async deleteTask(req: Request, res: Response) {
+      try {
+         const { userId, routineId, taskId } = req.params;
+         console.log(userId, "userId");
+         console.log(routineId, "routineId");
+         console.log(taskId, "taskId");
+         // await this.middleware.isUserLoggedOrAdmin(req);
+
+         const response = await this.repository.deleteTask(taskId);
+         return response;
+      } catch (error) {
+         console.log("Error on task logic...");
          throw error;
       }
    }

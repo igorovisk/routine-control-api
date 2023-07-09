@@ -69,4 +69,17 @@ export class TaskRepository {
          throw error;
       }
    }
+
+   async deleteTask(taskId: string): Promise<TaskDTO> {
+      try {
+         console.log(taskId, "taskId on prisma");
+         const deletedTask = await prisma.task.delete({
+            where: { id: taskId },
+         });
+         return deletedTask;
+      } catch (error) {
+         console.log(error, "error deleting task...");
+         throw error;
+      }
+   }
 }

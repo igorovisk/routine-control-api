@@ -73,4 +73,17 @@ router
       }
    });
 
+router
+   .route("/users/:userId/routines/:routineId/tasks/:taskId")
+   .delete(async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         await controller.deleteTask(req, res, next);
+      } catch (error) {
+         const err = error as Error;
+         res.status(401).json({ error: err.message });
+      }
+   });
+
 export { router as TaskRouter };
