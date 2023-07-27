@@ -38,7 +38,16 @@ export class RoutineController {
    async putRoutine(req: Request, res: Response, next: NextFunction) {
       try {
          const updatedRoutine = await this.logic.updateRoutine(req, res);
-         return updatedRoutine;
+         return res.status(200).send(updatedRoutine);
+      } catch (error) {
+         next(error);
+         console.log(error, "<- Create Routine Error...");
+      }
+   }
+   async deleteRoutine(req: Request, res: Response, next: NextFunction) {
+      try {
+         const deletedRoutine = await this.logic.deleteRoutine(req, res);
+         return res.status(200).send(deletedRoutine);
       } catch (error) {
          next(error);
          console.log(error, "<- Create Routine Error...");

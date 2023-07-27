@@ -22,8 +22,8 @@ export class RoutineLogic {
 
    async getRoutineById(req: Request, res: Response): Promise<RoutineDTO | {}> {
       try {
-         const { id } = req.params;
-         const response = await this.repository.getRoutineById(id);
+         const { routineId } = req.params;
+         const response = await this.repository.getRoutineById(routineId);
          return response;
       } catch (error) {
          console.log("error on routine logic...");
@@ -66,6 +66,21 @@ export class RoutineLogic {
          await this.middleware.isUserLoggedOrAdmin(req);
 
          const response = await this.repository.updateRoutine(updatedRoutine);
+
+         return response;
+      } catch (error) {
+         console.log("error on routine logic...");
+         throw error;
+      }
+   }
+
+   async deleteRoutine(req: Request, res: Response): Promise<RoutineDTO> {
+      try {
+         const { routineId } = req.params;
+
+         await this.middleware.isUserLoggedOrAdmin(req);
+
+         const response = await this.repository.deleteRoutine(routineId);
 
          return response;
       } catch (error) {

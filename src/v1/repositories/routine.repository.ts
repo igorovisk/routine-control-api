@@ -50,4 +50,15 @@ export class RoutineRepository {
          throw error;
       }
    }
+
+   async deleteRoutine(routineId: string): Promise<RoutineDTO> {
+      try {
+         const deletedRoutine = await prisma.routine.delete({
+            where: { id: routineId },
+         });
+         return deletedRoutine;
+      } catch (error) {
+         throw error;
+      }
+   }
 }

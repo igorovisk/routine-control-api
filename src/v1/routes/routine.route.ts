@@ -57,4 +57,17 @@ router
       }
    });
 
+router
+   .route("/users/:userId/routines/:routineId")
+   .delete(async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         await controller.deleteRoutine(req, res, next);
+      } catch (error) {
+         const err = error as Error;
+         res.status(401).json({ error: err.message });
+      }
+   });
+
 export { router as RoutineRouter };
