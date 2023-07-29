@@ -61,7 +61,7 @@ export class TaskRepository {
    }
    async checkTask(checkedTaskObj: TaskDoneInterface): Promise<TaskDoneDTO> {
       try {
-         const taskTobeChecked = await prisma.task.findFirst({
+         const taskToBeChecked = await prisma.task.findFirst({
             where: {
                id: checkedTaskObj.taskId,
             },
@@ -85,7 +85,7 @@ export class TaskRepository {
 
          const formattedCheckedTaskDate = `${year}-${month}-${day}`;
 
-         taskTobeChecked?.doneDate.forEach((DatabaseTaskDate) => {
+         taskToBeChecked?.doneDate.forEach((DatabaseTaskDate) => {
             const year = DatabaseTaskDate.checkDate.getUTCFullYear();
             const month = String(
                DatabaseTaskDate.checkDate.getUTCMonth() + 1
@@ -95,7 +95,7 @@ export class TaskRepository {
             ).padStart(2, "0");
 
             // const formattedDatabaseDate = `${year}-${month}-${day}`;
-            const formattedDatabaseDate = `${year}-${month}-${29}`;
+            const formattedDatabaseDate = `${year}-${month}-${day}`;
             if (formattedDatabaseDate === formattedCheckedTaskDate) {
                throw new Error("This task was already checked today");
             }

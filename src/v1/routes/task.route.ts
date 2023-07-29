@@ -17,7 +17,7 @@ router
          await controller.getTasksByRoutine(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -31,7 +31,7 @@ router
          await controller.getAllTasks(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -43,7 +43,7 @@ router
          await controller.getTaskById(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -56,7 +56,7 @@ router
          await controller.createTask(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -69,7 +69,7 @@ router
          await controller.putTask(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -82,7 +82,7 @@ router
          await controller.checkTask(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
@@ -95,7 +95,7 @@ router
          await controller.deleteTask(req, res, next);
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(500).json({ error: err.message });
       }
    });
 
