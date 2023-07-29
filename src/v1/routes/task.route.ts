@@ -75,6 +75,19 @@ router
 
 router
    .route("/users/:userId/routines/:routineId/tasks/:taskId")
+   .post(async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         await controller.checkTask(req, res, next);
+      } catch (error) {
+         const err = error as Error;
+         res.status(401).json({ error: err.message });
+      }
+   });
+
+router
+   .route("/users/:userId/routines/:routineId/tasks/:taskId")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
       try {
          const token = JWTTokenUtils.formatToken(req.headers.cookie);

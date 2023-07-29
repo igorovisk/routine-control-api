@@ -6,7 +6,7 @@ const port = process.env.PORT;
 var cors = require("cors");
 const middleware = new Middleware();
 const corsOrigin = {
-   origin: "http://localhost:3000", //or whatever port your frontend is using
+   origin: true,
    credentials: true,
    optionSuccessStatus: 200,
 };

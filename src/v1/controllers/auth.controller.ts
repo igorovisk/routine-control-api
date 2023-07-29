@@ -22,8 +22,7 @@ export class AuthController {
 
          return res.status(200).send();
       } catch (error) {
-         console.log(error, "ERROR ON LOGIN");
-         res.status(401).json({ Error: "Wrong email or password." });
+         throw error;
       }
    }
 
@@ -32,9 +31,7 @@ export class AuthController {
          const response = await this.logic.logout(req, res);
          return res.status(200).json("Sucessfully logged off").send();
       } catch (error) {
-         console.log(error);
-         res.status(401).json({ Error: "Error while logging out." });
-         next(error);
+         throw error;
       }
    }
 }

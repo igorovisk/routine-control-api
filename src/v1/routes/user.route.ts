@@ -7,11 +7,20 @@ const controller = new UserController();
 const router = Router();
 const middleware = new Middleware();
 
-router.route("/me$").get((req: Request, res: Response, next: NextFunction) => {
-   const token = JWTTokenUtils.formatToken(req.headers.cookie);
-   JWTTokenUtils.verify(token);
-   controller.getMe(req, res, next);
-});
+router
+   .route("/me$")
+   .get(async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         if (req.headers.cookie) {
+            const token = JWTTokenUtils.formatToken(req.headers.cookie);
+            JWTTokenUtils.verify(token);
+            await controller.getMe(req, res, next);
+         }
+      } catch (error) {
+         const err = error as Error;
+         res.status(401).json({ error: err.message });
+      }
+   });
 
 router
    .route("/users")

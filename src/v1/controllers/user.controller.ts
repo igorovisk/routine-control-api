@@ -11,7 +11,6 @@ export class UserController {
    async getMe(req: Request, res: Response, next: NextFunction) {
       try {
          const response = await this.logic.getMe(req, res);
-         console.log(response, "get me");
          return res.status(200).send(response);
       } catch (error) {
          throw error;
@@ -50,7 +49,7 @@ export class UserController {
          const response = await this.logic.updateUser(req, res);
          return res.status(200).send(response);
       } catch (error) {
-         console.log('error no controler')
+         console.log("error no controler");
          throw error;
       }
    }

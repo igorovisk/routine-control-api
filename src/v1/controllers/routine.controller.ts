@@ -13,16 +13,17 @@ export class RoutineController {
          const routines = await this.logic.getAllRoutines(req, res);
          return res.status(200).send(routines);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Get Routines Error...");
       }
    }
+
    async getRoutineById(req: Request, res: Response, next: NextFunction) {
       try {
          const routine = await this.logic.getRoutineById(req, res);
          return res.status(200).send(routine);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Get Routines Error...");
       }
    }
@@ -32,24 +33,27 @@ export class RoutineController {
          const newRoutine = await this.logic.createRoutine(req, res);
          return res.status(200).send(newRoutine);
       } catch (error) {
+         throw error;
          console.log(error, "<- Create Routine Error...");
       }
    }
+
    async putRoutine(req: Request, res: Response, next: NextFunction) {
       try {
          const updatedRoutine = await this.logic.updateRoutine(req, res);
          return res.status(200).send(updatedRoutine);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Create Routine Error...");
       }
    }
+
    async deleteRoutine(req: Request, res: Response, next: NextFunction) {
       try {
          const deletedRoutine = await this.logic.deleteRoutine(req, res);
          return res.status(200).send(deletedRoutine);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Create Routine Error...");
       }
    }

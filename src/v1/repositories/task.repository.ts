@@ -1,6 +1,8 @@
 import { TaskDTO } from "../interfaces/dtos/task.dto";
+import { TaskDoneDTO } from "../interfaces/dtos/taskDone.dto";
 import { TaskInterface } from "../interfaces";
 import { PrismaClient } from "@prisma/client";
+import { TaskDoneInterface } from "../interfaces/taskDone.interface";
 const prisma = new PrismaClient();
 
 export class TaskRepository {
@@ -53,6 +55,56 @@ export class TaskRepository {
       try {
          const newTask = await prisma.task.create({ data: task });
          return newTask;
+      } catch (error) {
+         throw error;
+      }
+   }
+   async checkTask(checkedTaskObj: TaskDoneInterface): Promise<TaskDoneDTO> {
+      try {
+         const taskTobeChecked = await prisma.task.findFirst({
+            where: {
+               id: checkedTaskObj.taskId,
+            },
+            select: {
+               doneDate: {
+                  select: {
+                     checkDate: true,
+                  },
+               },
+            },
+         });
+
+         const year = checkedTaskObj.checkDate.getUTCFullYear();
+         const month = String(
+            checkedTaskObj.checkDate.getUTCMonth() + 1
+         ).padStart(2, "0");
+         const day = String(checkedTaskObj.checkDate.getUTCDate()).padStart(
+            2,
+            "0"
+         );
+
+         const formattedCheckedTaskDate = `${year}-${month}-${day}`;
+
+         taskTobeChecked?.doneDate.forEach((DatabaseTaskDate) => {
+            const year = DatabaseTaskDate.checkDate.getUTCFullYear();
+            const month = String(
+               DatabaseTaskDate.checkDate.getUTCMonth() + 1
+            ).padStart(2, "0");
+            const day = String(
+               DatabaseTaskDate.checkDate.getUTCDate()
+            ).padStart(2, "0");
+
+            // const formattedDatabaseDate = `${year}-${month}-${day}`;
+            const formattedDatabaseDate = `${year}-${month}-${29}`;
+            if (formattedDatabaseDate === formattedCheckedTaskDate) {
+               throw new Error("This task was already checked today");
+            }
+         });
+         const checkedTask = await prisma.taskDoneDate.create({
+            data: checkedTaskObj,
+         });
+
+         return checkedTask;
       } catch (error) {
          throw error;
       }

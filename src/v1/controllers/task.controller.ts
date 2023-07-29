@@ -13,7 +13,7 @@ export class TaskController {
          const tasks = await this.logic.getAllTasks(req, res);
          return res.status(200).send(tasks);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Get Tasks Error...");
       }
    }
@@ -23,7 +23,7 @@ export class TaskController {
          const tasks = await this.logic.getTasksByRoutine(req, res);
          return res.status(200).send(tasks);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Get Tasks Error...");
       }
    }
@@ -32,7 +32,7 @@ export class TaskController {
          const task = await this.logic.getTaskById(req, res);
          return res.status(200).send(task);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Get Tasks Error...");
       }
    }
@@ -42,6 +42,7 @@ export class TaskController {
          const newTask = await this.logic.createTask(req, res);
          return res.status(200).send(newTask);
       } catch (error) {
+         throw error;
          console.log(error, "<- Create Task Error...");
       }
    }
@@ -50,7 +51,7 @@ export class TaskController {
          const updatedTask = await this.logic.putTask(req, res);
          return updatedTask;
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Create Task Error...");
       }
    }
@@ -60,8 +61,17 @@ export class TaskController {
          const deletedTask = await this.logic.deleteTask(req, res);
          return res.status(200).send(deletedTask);
       } catch (error) {
-         next(error);
+         throw error;
          console.log(error, "<- Create Task Error...");
+      }
+   }
+
+   async checkTask(req: Request, res: Response, next: NextFunction) {
+      try {
+         const checkedTask = await this.logic.checkTask(req, res);
+         return res.status(200).send(checkedTask);
+      } catch (error) {
+         throw error;
       }
    }
 }

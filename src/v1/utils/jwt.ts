@@ -12,8 +12,7 @@ export class JWTTokenUtils {
 
    static verify(token: string) {
       try {
-         const tokenVerify = token.split(";")[0];
-         return jwt.verify(tokenVerify, process.env.JWT_SECRET || "");
+         return jwt.verify(token, process.env.JWT_SECRET || "");
       } catch (error) {
          throw new Error(`Token is invalid / User is not logged in.`);
       }

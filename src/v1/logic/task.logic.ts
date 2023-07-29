@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { TaskDTO } from "../interfaces/dtos";
 import { TaskRepository } from "../repositories";
-
+import { TaskDoneInterface } from "../interfaces/taskDone.interface";
 export class TaskLogic {
    private repository: TaskRepository;
 
@@ -56,6 +56,22 @@ export class TaskLogic {
             routineId: routineId,
          };
          const response = await this.repository.createTask(newTask);
+         return response;
+      } catch (error) {
+         console.log("error on task logic...");
+         throw error;
+      }
+   }
+
+   async checkTask(req: Request, res: Response) {
+      try {
+         const { taskId } = req.params;
+
+         const checkedTask = {
+            checkDate: new Date(),
+            taskId,
+         };
+         const response = await this.repository.checkTask(checkedTask);
          return response;
       } catch (error) {
          console.log("error on task logic...");

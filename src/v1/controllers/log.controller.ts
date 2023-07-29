@@ -12,6 +12,7 @@ export class LogController {
       try {
          await this.logic.createLog(log);
       } catch (error) {
+         throw error;
          console.log(error, "<- Create Log Error...");
       }
    }

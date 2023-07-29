@@ -29,6 +29,11 @@ export class UserRepository {
                            id: true,
                            name: true,
                            description: true,
+                           doneDate: {
+                              select: {
+                                 checkDate: true,
+                              },
+                           },
                         },
                      },
                   },
@@ -36,6 +41,7 @@ export class UserRepository {
             },
          });
          if (!me) {
+            return {};
             throw new Error("User not found");
          }
          return {

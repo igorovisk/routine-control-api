@@ -26,17 +26,26 @@ model User {
 }
 
 model Task {
-  id          String   @id @unique @default(uuid())
+  id          String         @id @unique @default(uuid())
   routineId   String
   name        String
-  routine     Routine  @relation(fields: [routineId], references: [id])
+  routine     Routine        @relation(fields: [routineId], references: [id])
   description String?
-  done        Boolean  @default(false)
   comment     String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @default(now()) @map("updated_at")
+  doneDate    TaskDoneDate[]
 
   @@map("tasks")
+}
+
+model TaskDoneDate {
+  id        String   @id @unique @default(uuid())
+  taskId    String
+  checkDate DateTime
+  task      Task?    @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 }
 
 model Routine {
