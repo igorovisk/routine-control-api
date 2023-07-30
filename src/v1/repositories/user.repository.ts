@@ -41,7 +41,6 @@ export class UserRepository {
             },
          });
          if (!me) {
-            return {};
             throw new Error("User not found");
          }
          return {

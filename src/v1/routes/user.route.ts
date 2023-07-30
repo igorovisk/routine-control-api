@@ -18,7 +18,7 @@ router
          }
       } catch (error) {
          const err = error as Error;
-         res.status(401).json({ error: err.message });
+         res.status(401).send({ error: err.message });
       }
    });
 
