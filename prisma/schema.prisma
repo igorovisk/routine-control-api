@@ -29,7 +29,7 @@ model Task {
   id          String         @id @unique @default(uuid())
   routineId   String
   name        String
-  routine     Routine        @relation(fields: [routineId], references: [id])
+  routine     Routine        @relation(fields: [routineId], references: [id], onDelete: Cascade)
   description String?
   comment     String?
   createdAt   DateTime       @default(now()) @map("created_at")
@@ -43,7 +43,7 @@ model TaskDoneDate {
   id        String   @id @unique @default(uuid())
   taskId    String
   checkDate DateTime
-  task      Task?    @relation(fields: [taskId], references: [id])
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 }
@@ -53,7 +53,7 @@ model Routine {
   name        String
   description String?
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   color       String   @default("white")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @map("updated_at")

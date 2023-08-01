@@ -3,6 +3,7 @@ import { TaskDoneDTO } from "../interfaces/dtos/taskDone.dto";
 import { TaskInterface } from "../interfaces";
 import { PrismaClient } from "@prisma/client";
 import { TaskDoneInterface } from "../interfaces/taskDone.interface";
+import { formatDateToSimpleDate } from "../utils";
 const prisma = new PrismaClient();
 
 export class TaskRepository {
@@ -59,56 +60,6 @@ export class TaskRepository {
          throw error;
       }
    }
-   async checkTask(checkedTaskObj: TaskDoneInterface): Promise<TaskDoneDTO> {
-      try {
-         const taskToBeChecked = await prisma.task.findFirst({
-            where: {
-               id: checkedTaskObj.taskId,
-            },
-            select: {
-               doneDate: {
-                  select: {
-                     checkDate: true,
-                  },
-               },
-            },
-         });
-
-         const year = checkedTaskObj.checkDate.getUTCFullYear();
-         const month = String(
-            checkedTaskObj.checkDate.getUTCMonth() + 1
-         ).padStart(2, "0");
-         const day = String(checkedTaskObj.checkDate.getUTCDate()).padStart(
-            2,
-            "0"
-         );
-
-         const formattedCheckedTaskDate = `${year}-${month}-${day}`;
-
-         taskToBeChecked?.doneDate.forEach((DatabaseTaskDate) => {
-            const year = DatabaseTaskDate.checkDate.getUTCFullYear();
-            const month = String(
-               DatabaseTaskDate.checkDate.getUTCMonth() + 1
-            ).padStart(2, "0");
-            const day = String(
-               DatabaseTaskDate.checkDate.getUTCDate()
-            ).padStart(2, "0");
-
-            // const formattedDatabaseDate = `${year}-${month}-${day}`;
-            const formattedDatabaseDate = `${year}-${month}-${day}`;
-            if (formattedDatabaseDate === formattedCheckedTaskDate) {
-               throw new Error("This task was already checked today");
-            }
-         });
-         const checkedTask = await prisma.taskDoneDate.create({
-            data: checkedTaskObj,
-         });
-
-         return checkedTask;
-      } catch (error) {
-         throw error;
-      }
-   }
 
    async putTask(task: TaskInterface): Promise<TaskDTO> {
       try {
@@ -129,6 +80,72 @@ export class TaskRepository {
             where: { id: taskId },
          });
          return deletedTask;
+      } catch (error) {
+         console.log(error, "error deleting task...");
+         throw error;
+      }
+   }
+
+   async checkTask(checkedTaskObj: TaskDoneInterface): Promise<TaskDoneDTO> {
+      try {
+         const taskToBeChecked = await prisma.task.findFirst({
+            where: {
+               id: checkedTaskObj.taskId,
+            },
+            select: {
+               doneDate: {
+                  select: {
+                     checkDate: true,
+                  },
+               },
+            },
+         });
+
+         const formattedCheckedTaskDate = formatDateToSimpleDate(
+            checkedTaskObj.checkDate
+         );
+
+         taskToBeChecked?.doneDate.forEach((DatabaseTaskDate) => {
+            const formattedDatabaseDate = formatDateToSimpleDate(
+               DatabaseTaskDate.checkDate
+            );
+            if (formattedDatabaseDate === formattedCheckedTaskDate) {
+               throw new Error("This task was already checked today");
+            }
+         });
+
+         const checkedTask = await prisma.taskDoneDate.create({
+            data: checkedTaskObj,
+         });
+
+         return checkedTask;
+      } catch (error) {
+         throw error;
+      }
+   }
+
+   async uncheckTask(taskId: string): Promise<TaskDoneDTO> {
+      try {
+         const uncheckedTasksToDelete = await prisma.taskDoneDate.findMany({
+            where: {
+               taskId: taskId,
+            },
+         });
+
+         const today = formatDateToSimpleDate(new Date());
+
+         const checkDateToDelete = uncheckedTasksToDelete.find(
+            (task) => formatDateToSimpleDate(task.checkDate) === today
+         );
+         console.log(checkDateToDelete, "CheckDate to delete");
+
+         if (!checkDateToDelete) {
+            throw new Error("Task not found with the given ID and checkDate.");
+         }
+         const uncheckedTask = await prisma.taskDoneDate.delete({
+            where: { id: checkDateToDelete.id },
+         });
+         return uncheckedTask;
       } catch (error) {
          console.log(error, "error deleting task...");
          throw error;

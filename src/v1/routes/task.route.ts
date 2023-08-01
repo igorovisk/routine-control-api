@@ -75,6 +75,20 @@ router
 
 router
    .route("/users/:userId/routines/:routineId/tasks/:taskId")
+   .delete(async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const token = JWTTokenUtils.formatToken(req.headers.cookie);
+         JWTTokenUtils.verify(token);
+         await controller.deleteTask(req, res, next);
+      } catch (error) {
+         const err = error as Error;
+         res.status(400).json({ error: err.message });
+      }
+   });
+
+//CHECK / UNCHECK
+router
+   .route("/users/:userId/tasks/:taskId")
    .post(async (req: Request, res: Response, next: NextFunction) => {
       try {
          const token = JWTTokenUtils.formatToken(req.headers.cookie);
@@ -87,16 +101,15 @@ router
    });
 
 router
-   .route("/users/:userId/routines/:routineId/tasks/:taskId")
+   .route("/users/:userId/tasks/:taskId/undo")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
       try {
          const token = JWTTokenUtils.formatToken(req.headers.cookie);
          JWTTokenUtils.verify(token);
-         await controller.deleteTask(req, res, next);
+         await controller.uncheckTask(req, res, next);
       } catch (error) {
          const err = error as Error;
          res.status(400).json({ error: err.message });
       }
    });
-
 export { router as TaskRouter };

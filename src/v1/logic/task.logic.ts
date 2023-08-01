@@ -63,22 +63,6 @@ export class TaskLogic {
       }
    }
 
-   async checkTask(req: Request, res: Response) {
-      try {
-         const { taskId } = req.params;
-
-         const checkedTask = {
-            checkDate: new Date(),
-            taskId,
-         };
-         const response = await this.repository.checkTask(checkedTask);
-         return response;
-      } catch (error) {
-         console.log("error on task logic...");
-         throw error;
-      }
-   }
-
    async putTask(req: Request, res: Response) {
       try {
          const { name, description, comment, routineId, taskId } = req.body;
@@ -103,15 +87,40 @@ export class TaskLogic {
    async deleteTask(req: Request, res: Response) {
       try {
          const { userId, routineId, taskId } = req.params;
-         console.log(userId, "userId");
-         console.log(routineId, "routineId");
-         console.log(taskId, "taskId");
+
          // await this.middleware.isUserLoggedOrAdmin(req);
 
          const response = await this.repository.deleteTask(taskId);
          return response;
       } catch (error) {
          console.log("Error on task logic...");
+         throw error;
+      }
+   }
+
+   async checkTask(req: Request, res: Response) {
+      try {
+         const { taskId } = req.params;
+
+         const checkedTask = {
+            checkDate: new Date(),
+            taskId,
+         };
+         const response = await this.repository.checkTask(checkedTask);
+         return response;
+      } catch (error) {
+         console.log("error on task logic...");
+         throw error;
+      }
+   }
+
+   async uncheckTask(req: Request, res: Response) {
+      try {
+         const { taskId } = req.params;
+         const response = await this.repository.uncheckTask(taskId);
+         return response;
+      } catch (error) {
+         console.log("error on task logic...");
          throw error;
       }
    }

@@ -14,7 +14,6 @@ export class TaskController {
          return res.status(200).send(tasks);
       } catch (error) {
          throw error;
-         console.log(error, "<- Get Tasks Error...");
       }
    }
 
@@ -24,7 +23,6 @@ export class TaskController {
          return res.status(200).send(tasks);
       } catch (error) {
          throw error;
-         console.log(error, "<- Get Tasks Error...");
       }
    }
    async getTaskById(req: Request, res: Response, next: NextFunction) {
@@ -33,7 +31,6 @@ export class TaskController {
          return res.status(200).send(task);
       } catch (error) {
          throw error;
-         console.log(error, "<- Get Tasks Error...");
       }
    }
 
@@ -43,7 +40,6 @@ export class TaskController {
          return res.status(200).send(newTask);
       } catch (error) {
          throw error;
-         console.log(error, "<- Create Task Error...");
       }
    }
    async putTask(req: Request, res: Response, next: NextFunction) {
@@ -52,7 +48,6 @@ export class TaskController {
          return updatedTask;
       } catch (error) {
          throw error;
-         console.log(error, "<- Create Task Error...");
       }
    }
 
@@ -62,13 +57,20 @@ export class TaskController {
          return res.status(200).send(deletedTask);
       } catch (error) {
          throw error;
-         console.log(error, "<- Create Task Error...");
       }
    }
 
    async checkTask(req: Request, res: Response, next: NextFunction) {
       try {
          const checkedTask = await this.logic.checkTask(req, res);
+         return res.status(200).send(checkedTask);
+      } catch (error) {
+         throw error;
+      }
+   }
+   async uncheckTask(req: Request, res: Response, next: NextFunction) {
+      try {
+         const checkedTask = await this.logic.uncheckTask(req, res);
          return res.status(200).send(checkedTask);
       } catch (error) {
          throw error;
