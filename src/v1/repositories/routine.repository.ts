@@ -5,60 +5,39 @@ const prisma = new PrismaClient();
 
 export class RoutineRepository {
    async getAllRoutines(): Promise<RoutineDTO[]> {
-      try {
-         const routines = await prisma.routine.findMany();
-         return routines;
-      } catch (error) {
-         console.log(error, "Error getting all RoutineS from database.");
-         throw error;
-      }
+      const routines = await prisma.routine.findMany();
+      return routines;
    }
 
    async getRoutineById(id: string): Promise<RoutineDTO | {}> {
-      try {
-         const routine = await prisma.routine.findUnique({
-            where: {
-               id: id,
-            },
-         });
-         if (!routine) {
-            return {};
-         }
-         return routine;
-      } catch (error) {
-         throw error;
+      const routine = await prisma.routine.findUnique({
+         where: {
+            id: id,
+         },
+      });
+      if (!routine) {
+         return {};
       }
+      return routine;
    }
 
    async createRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
-      try {
-         const newRoutine = await prisma.routine.create({ data: routine });
-         return newRoutine;
-      } catch (error) {
-         throw error;
-      }
+      const newRoutine = await prisma.routine.create({ data: routine });
+      return newRoutine;
    }
 
    async updateRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
-      try {
-         const updatedRoutine = await prisma.routine.update({
-            where: { id: routine.id },
-            data: routine,
-         });
-         return updatedRoutine;
-      } catch (error) {
-         throw error;
-      }
+      const updatedRoutine = await prisma.routine.update({
+         where: { id: routine.id },
+         data: routine,
+      });
+      return updatedRoutine;
    }
 
    async deleteRoutine(routineId: string): Promise<RoutineDTO> {
-      try {
-         const deletedRoutine = await prisma.routine.delete({
-            where: { id: routineId },
-         });
-         return deletedRoutine;
-      } catch (error) {
-         throw error;
-      }
+      const deletedRoutine = await prisma.routine.delete({
+         where: { id: routineId },
+      });
+      return deletedRoutine;
    }
 }

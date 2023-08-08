@@ -13,7 +13,6 @@ export class LogLogic {
          const response = await this.repository.postLog(log);
          return response;
       } catch (error) {
-         console.log("error on log logic...");
          throw error;
       }
    }

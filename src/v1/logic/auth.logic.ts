@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserRepository } from "../repositories";
 import { JWTTokenUtils } from "../utils";
 import { Crypto } from "../utils";
+import { BadRequestError } from "../../helpers/errors";
 
 export class AuthLogic {
    private static jwt: JWTTokenUtils;
@@ -14,35 +15,30 @@ export class AuthLogic {
    }
 
    async login(email: string, password: string): Promise<string> {
-      try {
-         const user = await this.userRepository.getUserByEmail(email);
-         if (!user) {
-            throw new Error("User not found..");
-         }
-
-         const comparedPasswords = await this.crypto.compare(
-            password,
-            user.password
-         );
-
-         if (!comparedPasswords) {
-            throw new Error("Wrong username or password");
-         }
-
-         const token = JWTTokenUtils.sign({
-            user: { ...user },
-            auth: true,
-         });
-
-         return token;
-      } catch (error) {
-         console.log(error, "<- Error on login logic..");
-         throw error;
+      const user = await this.userRepository.getUserByEmail(email);
+      if (!user) {
+         throw new BadRequestError("User not found..");
       }
+
+      const comparedPasswords = await this.crypto.compare(
+         password,
+         user.password
+      );
+
+      if (!comparedPasswords) {
+         throw new BadRequestError("Wrong username/password");
+      }
+
+      const token = JWTTokenUtils.sign({
+         user: { ...user },
+         auth: true,
+      });
+
+      return token;
    }
 
-   async logout(req: Request, res: Response): Promise<Response> {
-      res.cookie("token", "", { expires: new Date(0) });
+   async logout(res: Response): Promise<Response> {
+      res.clearCookie("token"); // Clear the "token" cookie
       return res;
    }
 }

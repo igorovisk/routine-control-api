@@ -10,64 +10,39 @@ const middleware = new Middleware();
 router
    .route("/users/:userId/routines")
    .get(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         await middleware.checkIfAdminMiddleware(req);
-         await controller.getAllRoutines(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      await middleware.checkIfAdminMiddleware(req);
+      await controller.getAllRoutines(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:id")
    .get(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         await middleware.checkIfAdminMiddleware(req);
-         await controller.getRoutineById(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      await middleware.checkIfAdminMiddleware(req);
+      await controller.getRoutineById(req, res, next);
    });
 
 router
    .route("/users/:userId/routines")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.createRoutine(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.createRoutine(req, res, next);
    });
 
 router
    .route("/users/:userId/routines$")
    .put(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.putRoutine(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.putRoutine(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:routineId")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.deleteRoutine(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.deleteRoutine(req, res, next);
    });
 
 export { router as RoutineRouter };

@@ -15,7 +15,6 @@ export class RoutineLogic {
          const response = await this.repository.getAllRoutines();
          return response;
       } catch (error) {
-         console.log("error on routine logic...");
          throw error;
       }
    }
@@ -26,7 +25,6 @@ export class RoutineLogic {
          const response = await this.repository.getRoutineById(routineId);
          return response;
       } catch (error) {
-         console.log("error on routine logic...");
          throw error;
       }
    }
@@ -45,7 +43,6 @@ export class RoutineLogic {
          const response = await this.repository.createRoutine(newRoutine);
          return response;
       } catch (error) {
-         console.log("error on routine logic...");
          throw error;
       }
    }
@@ -69,7 +66,6 @@ export class RoutineLogic {
 
          return response;
       } catch (error) {
-         console.log("error on routine logic...");
          throw error;
       }
    }
@@ -84,7 +80,6 @@ export class RoutineLogic {
 
          return response;
       } catch (error) {
-         console.log("error on routine logic...");
          throw error;
       }
    }

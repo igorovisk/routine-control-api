@@ -14,7 +14,6 @@ export class TaskLogic {
          const response = await this.repository.getAllTasks();
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }
@@ -28,7 +27,6 @@ export class TaskLogic {
          );
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }
@@ -39,7 +37,6 @@ export class TaskLogic {
          const response = await this.repository.getTaskById(id);
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }
@@ -58,7 +55,6 @@ export class TaskLogic {
          const response = await this.repository.createTask(newTask);
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }
@@ -79,7 +75,6 @@ export class TaskLogic {
          const response = await this.repository.putTask(updatedTask);
          return response;
       } catch (error) {
-         console.log("Error on task logic...");
          throw error;
       }
    }
@@ -93,7 +88,6 @@ export class TaskLogic {
          const response = await this.repository.deleteTask(taskId);
          return response;
       } catch (error) {
-         console.log("Error on task logic...");
          throw error;
       }
    }
@@ -109,7 +103,6 @@ export class TaskLogic {
          const response = await this.repository.checkTask(checkedTask);
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }
@@ -120,7 +113,6 @@ export class TaskLogic {
          const response = await this.repository.uncheckTask(taskId);
          return response;
       } catch (error) {
-         console.log("error on task logic...");
          throw error;
       }
    }

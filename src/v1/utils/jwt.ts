@@ -1,4 +1,8 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
+import {
+   ForbiddenRequestError,
+   InternalServerError,
+} from "../../helpers/errors";
 export class JWTTokenUtils {
    static sign(
       data: object,
@@ -14,14 +18,16 @@ export class JWTTokenUtils {
       try {
          return jwt.verify(token, process.env.JWT_SECRET || "");
       } catch (error) {
-         throw new Error(`Token is invalid / User is not logged in.`);
+         throw new ForbiddenRequestError(
+            `Token is invalid / User is not logged in.`
+         );
       }
    }
 
    static decode(token: string): jwt.JwtPayload {
       try {
          if (typeof token !== "string" || token === null) {
-            throw new Error("Token is not a string");
+            throw new InternalServerError("Token is not a string");
          }
          return jwt.decode(token) as JwtPayload;
       } catch (error) {
@@ -36,8 +42,7 @@ export class JWTTokenUtils {
          formattedToken = formattedToken?.split(";")[0];
          return formattedToken || "";
       } catch (error) {
-         console.log(error, "error formatting token log");
-         return "";
+         throw error;
       }
    }
 }

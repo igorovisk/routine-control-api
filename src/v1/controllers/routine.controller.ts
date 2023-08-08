@@ -9,52 +9,27 @@ export class RoutineController {
    }
 
    async getAllRoutines(req: Request, res: Response, next: NextFunction) {
-      try {
-         const routines = await this.logic.getAllRoutines(req, res);
-         return res.status(200).send(routines);
-      } catch (error) {
-         throw error;
-         console.log(error, "<- Get Routines Error...");
-      }
+      const routines = await this.logic.getAllRoutines(req, res);
+      return res.status(200).send(routines);
    }
 
    async getRoutineById(req: Request, res: Response, next: NextFunction) {
-      try {
-         const routine = await this.logic.getRoutineById(req, res);
-         return res.status(200).send(routine);
-      } catch (error) {
-         throw error;
-         console.log(error, "<- Get Routines Error...");
-      }
+      const routine = await this.logic.getRoutineById(req, res);
+      return res.status(200).send(routine);
    }
 
    async createRoutine(req: Request, res: Response, next: NextFunction) {
-      try {
-         const newRoutine = await this.logic.createRoutine(req, res);
-         return res.status(200).send(newRoutine);
-      } catch (error) {
-         throw error;
-         console.log(error, "<- Create Routine Error...");
-      }
+      const newRoutine = await this.logic.createRoutine(req, res);
+      return res.status(200).send(newRoutine);
    }
 
    async putRoutine(req: Request, res: Response, next: NextFunction) {
-      try {
-         const updatedRoutine = await this.logic.updateRoutine(req, res);
-         return res.status(200).send(updatedRoutine);
-      } catch (error) {
-         throw error;
-         console.log(error, "<- Create Routine Error...");
-      }
+      const updatedRoutine = await this.logic.updateRoutine(req, res);
+      return res.status(200).send(updatedRoutine);
    }
 
    async deleteRoutine(req: Request, res: Response, next: NextFunction) {
-      try {
-         const deletedRoutine = await this.logic.deleteRoutine(req, res);
-         return res.status(200).send(deletedRoutine);
-      } catch (error) {
-         throw error;
-         console.log(error, "<- Create Routine Error...");
-      }
+      const deletedRoutine = await this.logic.deleteRoutine(req, res);
+      return res.status(200).send(deletedRoutine);
    }
 }

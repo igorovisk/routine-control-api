@@ -1,6 +1,8 @@
 import { UserDTO } from "../interfaces/dtos";
 import { UserInterface } from "../interfaces";
 import { PrismaClient } from "@prisma/client";
+import { BadRequestError } from "../../helpers/errors";
+import { PrismaClientValidationError } from "@prisma/client/runtime";
 
 const prisma = new PrismaClient();
 
@@ -53,9 +55,8 @@ export class UserRepository {
             profileImage: me.profileImage,
             role: me.role,
          };
-      } catch (error) {
-         console.log(error, "Error getting all users from database.");
-         throw error;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
 
@@ -74,9 +75,8 @@ export class UserRepository {
             },
          });
          return users;
-      } catch (error) {
-         console.log(error, "Error getting all users from database.");
-         throw error;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
 
@@ -98,21 +98,18 @@ export class UserRepository {
          if (!user) {
             return {};
          }
-         console.log(user, "User");
          return user;
-      } catch (error) {
-         console.log(error, "Error getting user.");
-         throw error;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
 
    async createUser(user: UserInterface): Promise<UserDTO> {
       try {
          const newUser = await prisma.user.create({ data: user });
-         console.log(newUser, "NEW USER");
          return newUser;
-      } catch (error) {
-         throw error;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
    async updateUser(updatedUserData: UpdatedUserDate): Promise<UserDTO> {
@@ -123,8 +120,8 @@ export class UserRepository {
          });
 
          return updatedUser;
-      } catch (error) {
-         throw { message: "username or email is already taken. " };
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
 
@@ -146,9 +143,8 @@ export class UserRepository {
             },
          });
          return user;
-      } catch (error) {
-         console.log(error, "Error getting user by username ou email.");
-         throw error;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
       }
    }
 }

@@ -7,23 +7,13 @@ const router = Router();
 router
    .route("/login$")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         await controller.login(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      await controller.login(req, res, next);
    });
 
 router
    .route("/logout$")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         await controller.logout(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(401).json({ error: err.message });
-      }
+      await controller.logout(req, res, next);
    });
 
 export { router as AuthRouter };

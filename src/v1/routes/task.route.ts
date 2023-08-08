@@ -10,106 +10,66 @@ const middleware = new Middleware();
 router
    .route("/users/:userId/routines/:routineId/tasks")
    .get(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await middleware.checkIfAdminMiddleware(req);
-         await controller.getTasksByRoutine(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await middleware.checkIfAdminMiddleware(req);
+      await controller.getTasksByRoutine(req, res, next);
    });
 
 router
    .route("/tasks")
    .get(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await middleware.checkIfAdminMiddleware(req);
-         await controller.getAllTasks(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await middleware.checkIfAdminMiddleware(req);
+      await controller.getAllTasks(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:routineId/tasks/:taskId")
    .get(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         await middleware.checkIfAdminMiddleware(req);
-         await controller.getTaskById(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      await middleware.checkIfAdminMiddleware(req);
+      await controller.getTaskById(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:routineId/tasks")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.createTask(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.createTask(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:routineId/tasks/:taskId")
    .put(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.putTask(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.putTask(req, res, next);
    });
 
 router
    .route("/users/:userId/routines/:routineId/tasks/:taskId")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.deleteTask(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.deleteTask(req, res, next);
    });
 
 //CHECK / UNCHECK
 router
    .route("/users/:userId/tasks/:taskId")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.checkTask(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.checkTask(req, res, next);
    });
 
 router
    .route("/users/:userId/tasks/:taskId/undo")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
-      try {
-         const token = JWTTokenUtils.formatToken(req.headers.cookie);
-         JWTTokenUtils.verify(token);
-         await controller.uncheckTask(req, res, next);
-      } catch (error) {
-         const err = error as Error;
-         res.status(400).json({ error: err.message });
-      }
+      const token = JWTTokenUtils.formatToken(req.headers.cookie);
+      JWTTokenUtils.verify(token);
+      await controller.uncheckTask(req, res, next);
    });
 export { router as TaskRouter };
