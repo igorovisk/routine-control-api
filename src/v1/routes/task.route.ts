@@ -56,7 +56,7 @@ router
       await controller.deleteTask(req, res, next);
    });
 
-//CHECK / UNCHECK
+//CHECK
 router
    .route("/users/:userId/tasks/:taskId")
    .post(async (req: Request, res: Response, next: NextFunction) => {
@@ -64,7 +64,7 @@ router
       JWTTokenUtils.verify(token);
       await controller.checkTask(req, res, next);
    });
-
+// UNCHECK
 router
    .route("/users/:userId/tasks/:taskId/undo")
    .delete(async (req: Request, res: Response, next: NextFunction) => {
