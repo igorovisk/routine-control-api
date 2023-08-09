@@ -27,6 +27,7 @@ export class RoutineRepository {
    }
 
    async updateRoutine(routine: RoutineInterface): Promise<RoutineDTO> {
+      console.log(routine, "routine");
       const updatedRoutine = await prisma.routine.update({
          where: { id: routine.id },
          data: routine,

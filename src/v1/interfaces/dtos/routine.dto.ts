@@ -6,7 +6,7 @@ export interface RoutineDTO {
    description?: string | null;
    tasks?: Task[];
    userId: string;
-   color: string;
+   color?: string;
    createdAt: Date;
    updatedAt: Date;
 }

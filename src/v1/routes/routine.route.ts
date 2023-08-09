@@ -15,7 +15,7 @@ router
    });
 
 router
-   .route("/users/:userId/routines/:id")
+   .route("/users/:userId/routines/:routineId")
    .get(async (req: Request, res: Response, next: NextFunction) => {
       await middleware.checkIfAdminMiddleware(req);
       await controller.getRoutineById(req, res, next);
@@ -30,7 +30,7 @@ router
    });
 
 router
-   .route("/users/:userId/routines$")
+   .route("/users/:userId/routines/:routineId")
    .put(async (req: Request, res: Response, next: NextFunction) => {
       const token = JWTTokenUtils.formatToken(req.headers.cookie);
       JWTTokenUtils.verify(token);

@@ -49,8 +49,8 @@ export class RoutineLogic {
 
    async updateRoutine(req: Request, res: Response): Promise<RoutineDTO> {
       try {
-         const { description, comment, name, routineId, color } = req.body;
-
+         const { description, comment, name, color } = req.body;
+         const { routineId } = req.params;
          const updatedRoutine = {
             id: routineId,
             name: name,
