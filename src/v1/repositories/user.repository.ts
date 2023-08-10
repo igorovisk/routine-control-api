@@ -54,6 +54,7 @@ export class UserRepository {
             routines: me.Routine,
             profileImage: me.profileImage,
             role: me.role,
+            createdAt: me.createdAt,
          };
       } catch (error: any) {
          throw new BadRequestError(error.message);
