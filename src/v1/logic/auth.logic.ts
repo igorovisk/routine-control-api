@@ -41,4 +41,16 @@ export class AuthLogic {
       res.clearCookie("token"); // Clear the "token" cookie
       return res;
    }
+
+   async resetPassword(req: Request, res: Response): Promise<Response> {
+      res.clearCookie("token");
+      const email = req.body;
+      const user = await this.userRepository.resetPassword(email);
+
+      const resetPasswordToken = "implement token";
+
+      //TODO Implement email sender and token generation
+
+      return res.status(200).send({ message: "Password token sent by email!" });
+   }
 }

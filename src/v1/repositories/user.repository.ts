@@ -148,4 +148,18 @@ export class UserRepository {
          throw new BadRequestError(error.message);
       }
    }
+
+   async resetPassword(email?: string): Promise<UserDTO | null> {
+      try {
+         const user = await prisma.user.findFirst({
+            where: {
+               email: email,
+            },
+         });
+
+         return user;
+      } catch (error: any) {
+         throw new BadRequestError(error.message);
+      }
+   }
 }

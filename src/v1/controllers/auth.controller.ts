@@ -25,4 +25,9 @@ export class AuthController {
       await this.logic.logout(res);
       return res.status(200).send();
    }
+
+   async resetPassword(req: Request, res: Response, next: NextFunction) {
+      await this.logic.resetPassword(req, res);
+      return res.status(200).send();
+   }
 }
