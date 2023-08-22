@@ -34,4 +34,8 @@ export class UserController {
       const response = await this.logic.getUserByEmail(req, res);
       return res.status(200).send(response);
    }
+   async resetPassword(req: Request, res: Response, next: NextFunction) {
+      const response = await this.logic.resetPassword(req, res);
+      return res.status(200).send(response);
+   }
 }

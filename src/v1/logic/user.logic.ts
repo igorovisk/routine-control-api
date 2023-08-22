@@ -133,4 +133,17 @@ export class UserLogic {
          throw error;
       }
    }
+
+   async resetPassword(req: Request, res: Response): Promise<void> {
+      try {
+         const { email } = req.body;
+
+         await this.middleware.isUserLoggedOrAdmin(req);
+
+         const response = await this.repository.resetPassword("");
+         // return response;
+      } catch (error) {
+         throw error;
+      }
+   }
 }

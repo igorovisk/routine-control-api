@@ -45,4 +45,10 @@ router
       await controller.createUser(req, res, next);
    });
 
+router
+   .route("/resetpassword")
+   .post(async (req: Request, res: Response, next: NextFunction) => {
+      await controller.resetPassword(req, res, next);
+   });
+
 export { router as UserRouter };

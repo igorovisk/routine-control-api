@@ -42,15 +42,15 @@ export class AuthLogic {
       return res;
    }
 
-   async resetPassword(req: Request, res: Response): Promise<Response> {
+   async forgotPassword(req: Request, res: Response): Promise<void> {
       res.clearCookie("token");
       const email = req.body;
-      const user = await this.userRepository.resetPassword(email);
+      // const user = await this.userRepository.forgotPassword(email);
 
-      const resetPasswordToken = "implement token";
+      // const resetPasswordToken = "implement token";
 
-      //TODO Implement email sender and token generation
+      // //TODO Implement email sender and token generation
 
-      return res.status(200).send({ message: "Password token sent by email!" });
+      // return res.status(200).send({ message: "Password token sent by email!" });
    }
 }

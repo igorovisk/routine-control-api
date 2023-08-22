@@ -17,9 +17,9 @@ router
    });
 
 router
-   .route("/resetpassword$")
+   .route("/forgotPassword$")
    .post(async (req: Request, res: Response, next: NextFunction) => {
-      await controller.resetPassword(req, res, next);
+      await controller.forgotPassword(req, res, next);
    });
 
 export { router as AuthRouter };
